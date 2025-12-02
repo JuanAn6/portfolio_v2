@@ -1,0 +1,39 @@
+---
+// src/components/ThemeToggle.astro
+---
+<button
+  id="theme-toggle"
+  class="p-2 rounded focus:outline-none ring-1 ring-transparent hover:ring-gray-300 dark:hover:ring-gray-600"
+  aria-label="Cambiar tema"
+>
+  <span id="theme-icon">🌙</span>
+</button>
+
+<script is:inline>
+  (function () {
+    const btn = document.getElementById('theme-toggle');
+    const icon = document.getElementById('theme-icon');
+
+    function setIcon() {
+      const isDark = document.documentElement.classList.contains('dark');
+      icon.textContent = isDark ? '☀️' : '🌙';
+    }
+
+    btn?.addEventListener('click', () => {
+      const root = document.documentElement;
+      const isDark = root.classList.contains('dark');
+
+      if (isDark) {
+        root.classList.remove('dark');
+        localStorage.setItem('theme', 'light');
+      } else {
+        root.classList.add('dark');
+        localStorage.setItem('theme', 'dark');
+      }
+
+      setIcon();
+    });
+
+    setIcon();
+  })();
+</script>

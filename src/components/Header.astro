@@ -1,0 +1,19 @@
+---
+import ThemeToggle from "./ThemeToggle.astro";
+---
+
+<header class="w-full bg-white dark:bg-gray-900 shadow">
+  <nav class="max-w-6xl mx-auto flex items-center justify-between p-4">
+    <a href="/" class="text-xl font-bold">MiPortafolio</a>
+
+    <div class="flex items-center gap-6">
+      <ul class="flex gap-6 text-sm font-medium">
+        <li><a class="hover:text-blue-500" href="/">Inicio</a></li>
+        <li><a class="hover:text-blue-500" href="/projects">Proyectos</a></li>
+        <li><a class="hover:text-blue-500" href="/about">Sobre mí</a></li>
+      </ul>
+
+      <ThemeToggle></ThemeToggle>
+    </div>
+  </nav>
+</header>
