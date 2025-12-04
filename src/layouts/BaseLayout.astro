@@ -1,9 +1,10 @@
 ---
 import Header from "../components/Header.astro";
 import '../styles/global.css'
+const { lang, t } = Astro.props;
 ---
-
-<html lang="es" class="scroll-smooth">
+<!doctype html>
+<html lang={lang} class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -33,5 +34,20 @@ import '../styles/global.css'
     <main class="max-w-6xl mx-auto p-6">
       <slot />
     </main>
+
+    <script>
+      const select = document.getElementById(
+        "lang-select"
+      ) as HTMLSelectElement | null;
+
+      select?.addEventListener("change", ({ target }) => {
+        const selectedLang = (target as HTMLSelectElement).value;
+        const newPath = window.location.pathname.replace(
+          /^\/(es|en)/,
+          `/${selectedLang}`
+        );
+        window.location.pathname = newPath;
+      });
+    </script>
   </body>
 </html>

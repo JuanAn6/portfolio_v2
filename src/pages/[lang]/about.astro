@@ -1,0 +1,19 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import es from "../../i18n/es";
+import en from "../../i18n/en";
+import type { Language } from "../../types/language.type";
+
+export function getStaticPaths() {
+  return [{ params: { lang: "es" } }, { params: { lang: "en" } }];
+}
+const lang = Astro.params.lang as Language;
+const translations = { es, en };
+const t = translations[lang];
+export const defaultRedirect = "/es";
+---
+
+<BaseLayout>
+  <h1 class="text-4xl font-bold">About me</h1>
+  <p class="mt-4">Bienvenido a mi portafolio.</p>
+</BaseLayout>

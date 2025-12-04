@@ -1,17 +1,45 @@
 ---
 import ThemeToggle from "./ThemeToggle.astro";
+import es from "../i18n/es";
+import en from "../i18n/en";
+import type { Language } from "../types/language.type";
+
+const url = Astro.url.pathname;
+const lang = Astro.params.lang as Language;
+const translations = { es, en };
+const t = translations[lang];
+
+
+const languages = [
+  { code: "es", label: t.languageOptions.es },
+  { code: "en", label: t.languageOptions.en },
+];
+
 ---
 
 <header class="w-full bg-white dark:bg-gray-900 shadow">
   <nav class="max-w-6xl mx-auto flex items-center justify-between p-4">
-    <a href="/" class="text-xl font-bold">MiPortafolio</a>
+    <a href="/" class="text-xl font-bold">{t.nav.portfolio}</a>
 
     <div class="flex items-center gap-6">
       <ul class="flex gap-6 text-sm font-medium">
-        <li><a class="hover:text-blue-500" href="/">Inicio</a></li>
-        <li><a class="hover:text-blue-500" href="/projects">Proyectos</a></li>
-        <li><a class="hover:text-blue-500" href="/about">Sobre mí</a></li>
+        <li><a href={`/${lang}/ `} class={'hover:text-blue-500 ' + (url=='/'? 'underline':'')}>{t.nav.home}</a></li>
+        <li><a href={`/${lang}/projects`} class={'hover:text-blue-500 ' + (url=='/projects'? 'underline':'')}>{t.nav.projects}</a></li>
+        <li><a href={`/${lang}/about`} class={'hover:text-blue-500 ' + (url=='/about'? 'underline':'')}>{t.nav.about_me}</a></li>
       </ul>
+
+      <form id="lang-form">
+        <label for="lang-select">{t.languageLabel}: </label>
+        <select id="lang-select" class="dark:bg-gray-800 cursor-pointer">
+          {
+            languages.map((langOpt) => (
+              <option value={langOpt.code} selected={langOpt.code === lang}>
+                {langOpt.label}
+              </option>
+            ))
+          }
+        </select>
+      </form>
 
       <ThemeToggle></ThemeToggle>
     </div>
