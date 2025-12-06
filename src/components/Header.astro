@@ -29,8 +29,7 @@ const languages = [
       </ul>
 
       <form id="lang-form">
-        <label for="lang-select">{t.languageLabel}: </label>
-        <select id="lang-select" class="dark:bg-gray-800 cursor-pointer">
+        <select id="lang-select" class="dark:bg-gray-800 cursor-pointer p-1 rounded focus:outline-none ring-1 ring-transparent cursor-pointer hover:ring-gray-300 dark:hover:ring-gray-600">
           {
             languages.map((langOpt) => (
               <option value={langOpt.code} selected={langOpt.code === lang}>
