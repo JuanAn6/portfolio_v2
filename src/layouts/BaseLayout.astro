@@ -15,7 +15,6 @@ const { lang, t } = Astro.props;
     (function() {
       try {
         const stored = localStorage.getItem("theme");
-        console.log('theme',stored);
         if (stored === "dark") document.documentElement.classList.add("dark");
         else if (stored === "light") document.documentElement.classList.remove("dark");
         else {

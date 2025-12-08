@@ -14,7 +14,7 @@ export function getStaticPaths() {
   return [{ params: { lang: "es" } }, { params: { lang: "en" } }];
 }
 const lang = Astro.params.lang as Language;
-const translations = { es, en };
+const translations:any = { es, en };
 const t = translations[lang];
 
 export const defaultRedirect = "/es";
@@ -24,8 +24,14 @@ let projects:any = [];
 switch(lang){
   case 'es':
     projects = projectsEs;
+    break;
   case 'en':
     projects = projectsEn;
+    break;
+  case 'ca':
+    projects = projectsEs;
+    // projects = projectsCa;
+    break;
 }
 
 
