@@ -5,7 +5,8 @@ import es from "../../i18n/es";
 import en from "../../i18n/en";
 import type { Language } from "../../types/language.type";
 
-import projectsEs from '../../content/es/projects';
+import projectsEs from '../../content/projects_es';
+import projectsEn from '../../content/projects_en';
 import ProjectCard from '../../components/ProjectCard.astro'
 
 
@@ -23,6 +24,8 @@ let projects:any = [];
 switch(lang){
   case 'es':
     projects = projectsEs;
+  case 'en':
+    projects = projectsEn;
 }
 
 
@@ -30,10 +33,9 @@ switch(lang){
 ---
 
 <BaseLayout>
-  <h1 class="text-4xl font-bold">Projects</h1>
+  <h1 class="text-4xl font-bold">{t.projects.title}</h1>
   <p class="mt-4">
-    Esto es una pequeña coleción de proyectos que he hecho durante los años de estudio 
-    y durante mi tiempo libre demientras de que trabajo.
+    {t.projects.introduction}
   </p>
 
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">

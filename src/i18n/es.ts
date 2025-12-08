@@ -20,5 +20,9 @@ export default {
     about: {
         title: "Acerca de este proyecto",
         content: "Este sitio es un ejemplo de internacionalización con Astro.",
+    },
+    projects: {
+        title: "Proyectos",
+        introduction: "Esto es una pequeña colección de proyectos que he hecho durante los años de estudio y durante mi tiempo libre demientras de que trabajo."
     }
 };
