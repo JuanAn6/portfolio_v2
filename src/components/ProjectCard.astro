@@ -1,4 +1,14 @@
 ---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import es from "../i18n/es";
+import en from "../i18n/en";
+import type { Language } from "../types/language.type";
+import BoxComponent from '../components/BoxComponent.astro';
+const lang = Astro.params.lang as Language;
+const translations:any = { es, en };
+const t:any = translations[lang];
+
+
 const { project } = Astro.props;
 ---
 
@@ -17,7 +27,7 @@ const { project } = Astro.props;
       href="#"
       class="mt-4 inline-flex text-sm font-semibold text-cyan-700 hover:text-cyan-500"
     >
-      Ver Detalles 
+      {t.projects.show_details}
       <!-- #007595 color -->
       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > 
         <path d="M12 6h-6a2 2 0 0 0 -2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-6" /> 
