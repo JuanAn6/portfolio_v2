@@ -24,6 +24,6 @@ export default {
     projects: {
         title: "Projects",
         show_details:"Show details",
-        introduction: "This is a small collection of projects I have done during my years of study and during my free time while I am working."
+        introduction: "This is a small collection of projects I have done during my years of study and during my free time."
     }
 };
