@@ -4,7 +4,6 @@ import es from "../i18n/es";
 import en from "../i18n/en";
 import type { Language } from "../types/language.type";
 
-const url = Astro.url.pathname;
 const lang = Astro.params.lang as Language;
 const translations:any = { es, en };
 const t = translations[lang];

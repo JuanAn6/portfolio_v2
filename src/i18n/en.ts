@@ -1,5 +1,6 @@
 export default {
     languageLabel: "Language",
+    workingOnThis: "Available soon!",
     languageOptions: {
         es: "Spanish",
         en: "English"
@@ -18,8 +19,8 @@ export default {
         introduce_my_objectives: "My goal is to continue growing professionally while contributing on teams and products that have an impact.",
     },
     about: {
-        title: "About this project",
-        content: "This site is an example of internationalization with Astro.",
+        title: "About me",
+        content: "",
     },
     projects: {
         title: "Projects",
