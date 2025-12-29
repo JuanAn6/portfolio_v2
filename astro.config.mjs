@@ -14,4 +14,6 @@ export default defineConfig({
       prefixDefaultLocale: true,
     }
   },
+  site: 'https://JuanAn6.github.io',
+  base: '/portfolio_v2',
 });
