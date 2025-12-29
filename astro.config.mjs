@@ -15,5 +15,5 @@ export default defineConfig({
     }
   },
   site: 'https://JuanAn6.github.io',
-  base: process.env.NODE_ENV === 'production' ? './portfolio_v2' : './',
+  base: process.env.NODE_ENV === 'production' ? './portfolio_v2/' : './',
 });
