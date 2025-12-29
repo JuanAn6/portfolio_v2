@@ -15,13 +15,13 @@ const languages = [
   { code: "en", label: t.languageOptions.en },
 ];
 
-
+const baseUrl = import.meta.env.BASE_URL;
 
 ---
 
 <header class="w-full bg-white dark:bg-gray-900 shadow sticky top-0 z-50">
   <nav class="max-w-6xl mx-auto flex flex-wrap items-center justify-between p-4">
-    <a href={`./`} class="text-xl font-bold text-cyan-700">
+    <a href={`${baseUrl}${lang}`} class="text-xl font-bold text-cyan-700">
       {t.nav.portfolio}
     </a>
 
@@ -39,9 +39,9 @@ const languages = [
       <div class="flex flex-col md:flex-row items-start md:items-center gap-6 mt-4 md:mt-0 pb-4 md:pb-0">
         
         <ul class="flex flex-col md:flex-row gap-6 text-sm font-medium w-full">
-          <li><a href={`./`} class="hover:text-cyan-500 block w-full">{t.nav.home}</a></li>
-          <li><a href={`./projects`} class="hover:text-cyan-500 block w-full">{t.nav.projects}</a></li>
-          <li><a href={`./about`} class="hover:text-cyan-500 block w-full">{t.nav.about_me}</a></li>
+          <li><a href={`${baseUrl}${lang}`} class="hover:text-cyan-500 block w-full">{t.nav.home}</a></li>
+          <li><a href={`${baseUrl}${lang}/projects`} class="hover:text-cyan-500 block w-full">{t.nav.projects}</a></li>
+          <li><a href={`${baseUrl}${lang}/about`} class="hover:text-cyan-500 block w-full">{t.nav.about_me}</a></li>
         </ul>
 
         <div class="flex items-center gap-4 border-t md:border-t-0 border-gray-100 dark:border-gray-800 pt-4 md:pt-0 w-full md:w-auto">
