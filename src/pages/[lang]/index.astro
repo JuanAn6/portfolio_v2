@@ -4,7 +4,7 @@ import es from "../../i18n/es";
 import en from "../../i18n/en";
 import type { Language } from "../../types/language.type";
 import BoxComponent from '../../components/BoxComponent.astro';
-
+import profile from '../../assets/imgs/profile.png';
 export function getStaticPaths() {
   return [{ params: { lang: "es" } }, { params: { lang: "en" } }];
 }
@@ -14,6 +14,7 @@ const t:any = translations[lang];
 
 export const defaultRedirect = "/es";
 
+
 ---
 
 <BaseLayout lang={lang} t={t}>
@@ -22,11 +23,20 @@ export const defaultRedirect = "/es";
       <h1 class="text-4xl font-bold ">{t.home.title}</h1>
       <h2 class="text-2xl mt-3">{t.home.subtitle}</h2>
   </div>
-  <div class="grid grid-cols-1 gap-8 mt-8">
-    <BoxComponent text={t.home.introduce_my_self}></BoxComponent>
-    <BoxComponent text={t.home.introduce_my_characteristics}></BoxComponent>
-    <BoxComponent text={t.home.introduce_my_objectives}></BoxComponent>
-    
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
+    <div class="flex-col flex gap-8 md:col-span-2">
+      <BoxComponent text={t.home.introduce_my_self}></BoxComponent>
+      <BoxComponent text={t.home.introduce_my_characteristics}></BoxComponent>
+      <BoxComponent text={t.home.introduce_my_objectives}></BoxComponent>
+      
+    </div>
+    <div class="grid grid-cols-1 gap-8">
+      <div class="flex">
+        <div class="h-fit bg-gray-50 dark:bg-gray-700 rounded-xl shadow-md overflow-hidden hover:shadow-xl transition duration-300 transform hover:-translate-y-1 p-6">
+          <img src={profile.src} />
+        </div>
+      </div>
+    </div>
   </div>
 </BaseLayout>
 
