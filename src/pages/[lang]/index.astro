@@ -3,8 +3,13 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import es from "../../i18n/es";
 import en from "../../i18n/en";
 import type { Language } from "../../types/language.type";
+import BoxText from '../../components/BoxText.astro';
 import BoxComponent from '../../components/BoxComponent.astro';
 import profile from '../../assets/imgs/profile.png';
+import Github from '../../assets/github.astro';
+import Linkedin from '../../assets/linkedin.astro';
+import Email from '../../assets/email.astro';
+
 export function getStaticPaths() {
   return [{ params: { lang: "es" } }, { params: { lang: "en" } }];
 }
@@ -25,16 +30,29 @@ export const defaultRedirect = "/es";
   </div>
   <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
     <div class="flex-col flex gap-8 md:col-span-2">
-      <BoxComponent text={t.home.introduce_my_self}></BoxComponent>
-      <BoxComponent text={t.home.introduce_my_characteristics}></BoxComponent>
-      <BoxComponent text={t.home.introduce_my_objectives}></BoxComponent>
+      <BoxText text={t.home.introduce_my_self}></BoxText>
+      <BoxText text={t.home.introduce_my_characteristics}></BoxText>
+      <BoxText text={t.home.introduce_my_objectives}></BoxText>
+      <BoxComponent>
+        <div class="flex items-center justify-evenly">
+          <a class="flex items-center hover:text-blue-600 transition" target="_blank" href="https://es.linkedin.com/in/juan-antonio-garc%C3%ADa-jim%C3%A9nez-651078236">
+            <Linkedin /> Linkedin
+          </a>
+          <a class="flex items-center transition hover:text-gray-400" target="_blank" href="https://github.com/JuanAn6">
+            <Github/> GitHub
+          </a>
+          <a class="flex items-center hover:text-red-600 transition" target="_blank" href="mailto:juanangarciaji@gmail.com">
+            <Email/> Email
+          </a>
+        </div>
+      </BoxComponent>
       
     </div>
     <div class="grid grid-cols-1 gap-8">
       <div class="flex">
-        <div class="h-fit bg-gray-50 dark:bg-gray-700 rounded-xl shadow-md overflow-hidden hover:shadow-xl transition duration-300 transform hover:-translate-y-1 p-6">
+        <BoxComponent>
           <img src={profile.src} />
-        </div>
+        </BoxComponent>
       </div>
     </div>
   </div>
