@@ -1,0 +1,33 @@
+---
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import es from '../../../../i18n/es';
+import en from '../../../../i18n/en';
+import type { Language } from '../../../../types/language.type';
+import ExampleProjectComponent from '../../../../components/projects/ExampleProjectComponent.astro';
+
+export function getStaticPaths() {
+  return [{ params: { lang: 'es' } }, { params: { lang: 'en' } }];
+}
+
+const lang = Astro.params.lang as Language;
+const translations:any = { es, en };
+const t:any = translations[lang];
+
+export const defaultRedirect = '/es';
+
+---
+
+<BaseLayout lang={lang} t={t}>
+  
+  <div class='flex flex-col items-start'>
+    <div class="flex justify-between flex-wrap items-center w-full">
+      <h1 class='text-4xl font-bold'>Example project</h1>
+      <div class='flex gap-8'>
+        <a href='./info' class='block shadow rounded-xl p-3 hover:bg-cyan-100 bg-cyan-100 font-bold cursor-pointer dark:bg-cyan-500 dark:hover:bg-cyan-500'>Information content</a>
+        <a href='./technical' class='block shadow rounded-xl p-3 hover:bg-cyan-100 bg-white font-bold cursor-pointer dark:bg-cyan-700 dark:hover:bg-cyan-500'>Technical content</a>
+      </div>
+    </div>
+      <ExampleProjectComponent />
+  </div>
+</BaseLayout>
+
