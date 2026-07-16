@@ -1,44 +1,24 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 
-import es from "../../i18n/es";
-import en from "../../i18n/en";
+import { getTranslations } from "../../i18n";
 import type { Language } from "../../types/language.type";
+import type { Project } from "../../types/project.type";
 
 import projectsEs from '../../content/projects_es';
 import projectsEn from '../../content/projects_en';
 import ProjectCard from '../../components/ProjectCard.astro'
 
+export { getStaticPaths } from "../../i18n";
 
-export function getStaticPaths() {
-  return [{ params: { lang: "es" } }, { params: { lang: "en" } }];
-}
 const lang = Astro.params.lang as Language;
-const translations:any = { es, en };
-const t = translations[lang];
+const t = getTranslations(lang);
 
-export const defaultRedirect = "/es";
-
-let projects:any = [];
-
-switch(lang){
-  case 'es':
-    projects = projectsEs;
-    break;
-  case 'en':
-    projects = projectsEn;
-    break;
-  case 'ca':
-    projects = projectsEs;
-    // projects = projectsCa;
-    break;
-}
-
-
-
+const projectsByLang: Record<Language, Project[]> = { es: projectsEs, en: projectsEn };
+const projects = projectsByLang[lang];
 ---
 
-<BaseLayout>
+<BaseLayout title={`${t.projects.title} — ${t.nav.portfolio}`} description={t.projects.introduction}>
   <h1 class="text-4xl font-bold">{t.projects.title}</h1>
   <p class="mt-4">
     {t.projects.introduction}
@@ -47,7 +27,7 @@ switch(lang){
     {t.workingOnThis}
   </h2>
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
-    { projects.map((p: any) => <ProjectCard project={p} /> ) }
+    { projects.map((p) => <ProjectCard project={p} /> ) }
   </div>
   
 </BaseLayout>

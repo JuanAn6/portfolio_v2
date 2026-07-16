@@ -12,8 +12,13 @@ export default defineConfig({
     locales: ['es', 'en'],
     routing: {
       prefixDefaultLocale: true,
+      // Astro's own redirect for `/` yields a bodyless response that a static
+      // build cannot write, leaving no dist/index.html. src/pages/index.astro
+      // handles the redirect instead.
+      redirectToDefaultLocale: false,
     }
   },
   site: 'https://JuanAn6.github.io',
-  base: process.env.NODE_ENV === 'production' ? './portfolio_v2/' : './',
+  // Kept identical in dev so local URLs match GitHub Pages' project subpath.
+  base: '/portfolio_v2/',
 });

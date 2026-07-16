@@ -1,18 +1,15 @@
 ---
 import ThemeToggle from "./ThemeToggle.astro";
-import es from "../i18n/es";
-import en from "../i18n/en";
+import { getTranslations, languages } from "../i18n";
 import type { Language } from "../types/language.type";
 
 const lang = Astro.params.lang as Language;
-const translations:any = { es, en };
-const t = translations[lang];
+const t = getTranslations(lang);
 
-
-const languages = [
-  { code: "es", label: t.languageOptions.es },
-  { code: "en", label: t.languageOptions.en },
-];
+const languageOptions = languages.map((code) => ({
+  code,
+  label: t.languageOptions[code],
+}));
 
 const baseUrl = import.meta.env.BASE_URL;
 
@@ -46,7 +43,7 @@ const baseUrl = import.meta.env.BASE_URL;
         <div class="flex items-center gap-4 border-t md:border-t-0 border-gray-100 dark:border-gray-800 pt-4 md:pt-0 w-full md:w-auto">
           <form id="lang-form">
             <select id="lang-select" class="dark:bg-gray-800 cursor-pointer p-1 rounded focus:outline-none ring-1 ring-transparent hover:ring-gray-300 dark:hover:ring-gray-600 text-sm">
-              {languages.map((langOpt) => (
+              {languageOptions.map((langOpt) => (
                 <option value={langOpt.code} selected={langOpt.code === lang}>
                   {langOpt.label}
                 </option>

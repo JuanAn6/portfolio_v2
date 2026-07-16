@@ -1,4 +1,6 @@
-export default {
+import type es from "./es";
+
+const en: typeof es = {
     languageLabel: "Language",
     workingOnThis: "Available soon!",
     languageOptions: {
@@ -28,3 +30,5 @@ export default {
         introduction: "This is a small collection of projects I have done during my years of study and during my free time."
     }
 };
+
+export default en;

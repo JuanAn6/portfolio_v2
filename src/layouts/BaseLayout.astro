@@ -1,32 +1,48 @@
 ---
 import Header from "../components/Header.astro";
+import { getTranslations } from "../i18n";
+import type { Language } from "../types/language.type";
 import '../styles/global.css'
-const { lang, t } = Astro.props;
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const lang = Astro.params.lang as Language;
+const t = getTranslations(lang);
+
+const {
+  title = `${t.nav.portfolio} — Juan Antonio García Jiménez`,
+  description = t.home.introduce_my_self,
+} = Astro.props;
+
+const base = import.meta.env.BASE_URL;
 ---
 <!doctype html>
 <html lang={lang} class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <title>Juan Antonio Garcia Jimenez</title>
-    <!-- <slot name="title">Mi Portafolio</slot> -->
-  </head>
-  <script is:inline>
-    (function() {
-      try {
-        const stored = localStorage.getItem("theme");
-        if (stored === "dark") document.documentElement.classList.add("dark");
-        else if (stored === "light") document.documentElement.classList.remove("dark");
-        else {
-          //System theme if nothing saved in localStorage
-          if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-            document.documentElement.classList.add('dark');
+    <link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <script is:inline>
+      (function() {
+        try {
+          const stored = localStorage.getItem("theme");
+          if (stored === "dark") document.documentElement.classList.add("dark");
+          else if (stored === "light") document.documentElement.classList.remove("dark");
+          else {
+            //System theme if nothing saved in localStorage
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+              document.documentElement.classList.add('dark');
+            }
           }
-        }
-      } catch (e) { console.error(e) }
-    })();
-  </script>
+        } catch (e) { console.error(e) }
+      })();
+    </script>
+  </head>
 
   <body class="bg-gray-200 dark:bg-gray-800 text-gray-900 dark:text-gray-100">
     <Header />
@@ -36,17 +52,21 @@ const { lang, t } = Astro.props;
     </main>
 
     <script>
+      const base = import.meta.env.BASE_URL;
       const select = document.getElementById(
         "lang-select"
       ) as HTMLSelectElement | null;
 
       select?.addEventListener("change", ({ target }) => {
         const selectedLang = (target as HTMLSelectElement).value;
-        const newPath = window.location.pathname.replace(
-          /^\/(es|en)/,
-          `/${selectedLang}`
-        );
-        window.location.pathname = newPath;
+        // Strip the base before swapping the locale segment; the deployed site
+        // lives under a subpath, so matching on a leading /es|/en never fires.
+        const path = window.location.pathname.startsWith(base)
+          ? window.location.pathname.slice(base.length)
+          : window.location.pathname.replace(/^\//, "");
+        const rest = path.split("/").slice(1).join("/");
+
+        window.location.pathname = `${base}${selectedLang}${rest ? `/${rest}` : ""}`;
       });
     </script>
   </body>

@@ -1,22 +1,24 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro";
-import es from "../i18n/es";
-import en from "../i18n/en";
+import { getTranslations } from "../i18n";
 import type { Language } from "../types/language.type";
-import BoxComponent from '../components/BoxComponent.astro';
-const lang = Astro.params.lang as Language;
-const translations:any = { es, en };
-const t:any = translations[lang];
+import type { Project } from "../types/project.type";
 
+interface Props {
+  project: Project;
+}
+
+const lang = Astro.params.lang as Language;
+const t = getTranslations(lang);
 
 const { project } = Astro.props;
+const href = `${import.meta.env.BASE_URL}${lang}/projects/${project.link}`;
 ---
 
 <div class="bg-gray-50 dark:bg-gray-700 rounded-xl shadow-md overflow-hidden hover:shadow-xl transition duration-300 transform hover:-translate-y-1">
   <img
     class="w-full h-48 object-cover"
     src={project.img}
-    alt="Imagen de Proyecto 1"
+    alt={project.title}
   />
   <div class="p-6">
     <h3 class="text-xl font-bold text-cyan-700 dark:text-cyan-500 mb-2">{project.title}</h3>
@@ -24,7 +26,7 @@ const { project } = Astro.props;
       {project.description}
     </p>
     <a
-      href={'projects/'+project.link}
+      href={href}
       class="mt-4 inline-flex text-sm font-semibold text-cyan-700 dark:text-cyan-500 hover:text-cyan-200"
     >
       {t.projects.show_details}

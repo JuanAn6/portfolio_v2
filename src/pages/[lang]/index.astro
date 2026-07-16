@@ -1,7 +1,6 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import es from "../../i18n/es";
-import en from "../../i18n/en";
+import { getTranslations } from "../../i18n";
 import type { Language } from "../../types/language.type";
 import BoxText from '../../components/BoxText.astro';
 import BoxComponent from '../../components/BoxComponent.astro';
@@ -10,19 +9,13 @@ import Github from '../../assets/github.astro';
 import Linkedin from '../../assets/linkedin.astro';
 import Email from '../../assets/email.astro';
 
-export function getStaticPaths() {
-  return [{ params: { lang: "es" } }, { params: { lang: "en" } }];
-}
+export { getStaticPaths } from "../../i18n";
+
 const lang = Astro.params.lang as Language;
-const translations:any = { es, en };
-const t:any = translations[lang];
-
-export const defaultRedirect = "/es";
-
-
+const t = getTranslations(lang);
 ---
 
-<BaseLayout lang={lang} t={t}>
+<BaseLayout>
   
   <div class="flex flex-col items-start">
       <h1 class="text-4xl font-bold ">{t.home.title}</h1>
