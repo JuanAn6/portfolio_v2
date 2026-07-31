@@ -27,7 +27,8 @@ const en: typeof es = {
     projects: {
         title: "Projects",
         show_details:"Show details",
-        introduction: "This is a small collection of projects I have done during my years of study and during my free time."
+        introduction: "This is a small collection of projects I have done during my years of study and during my free time.",
+        developing: "Developing"
     }
 };
 
