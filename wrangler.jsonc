@@ -1,6 +1,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "portfolio-v2",
+  "name": "portfolio",
   "compatibility_date": "2026-08-24",
 
   // Sitio 100% estático: NO hay "main", así que no se sube ningún worker.
