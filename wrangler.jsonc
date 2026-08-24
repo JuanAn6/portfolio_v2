@@ -1,0 +1,17 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "portfolio-v2",
+  "compatibility_date": "2026-08-24",
+
+  // Sitio 100% estático: NO hay "main", así que no se sube ningún worker.
+  // Ese era el origen del error "Uploading a Pages _worker.js directory as an
+  // asset": wrangler trataba el bundle de servidor como asset público.
+  // Si algún día se añade SSR con @astrojs/cloudflare, hay que añadir
+  // "main": "./dist/_worker.js/index.js" aquí, no un .assetsignore vacío.
+  "assets": {
+    "directory": "./dist",
+    // Astro genera URLs con directorio (/es/about/index.html); "404-page"
+    // sirve dist/404.html para lo que no exista.
+    "not_found_handling": "404-page"
+  }
+}

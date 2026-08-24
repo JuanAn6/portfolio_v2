@@ -18,7 +18,9 @@ export default defineConfig({
       redirectToDefaultLocale: false,
     }
   },
-  site: 'https://JuanAn6.github.io',
-  // Kept identical in dev so local URLs match GitHub Pages' project subpath.
-  base: '/portfolio_v2/',
+  site: 'https://juanangarcia.net',
+  // Cloudflare serves the site at the domain root, not at a subpath.
+  // All internal links are built using import.meta.env.BASE_URL, so
+  // this is the only place where that is determined. Keep it identical in dev.
+  base: '/',
 });

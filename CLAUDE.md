@@ -6,22 +6,34 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 | Command | Action |
 | :--- | :--- |
-| `npm run dev` | Dev server at `localhost:4321/portfolio_v2/` (note the base path) |
+| `npm run dev` | Dev server at `localhost:4321/` |
 | `npm run build` | Static build to `./dist/` |
-| `npm run preview` | Serve the built site locally |
+| `npm run preview` | Serve the built site locally (Astro's preview) |
+| `npm run cf:dev` | Build, then serve `dist/` through Wrangler — reproduces Cloudflare's asset serving, `_headers` and the 404 handling |
+| `npm run deploy` | Build and `wrangler deploy` by hand (normally unnecessary; see below) |
 | `npx astro check` | Typecheck; also runs in CI before the build |
 
 There is no test suite, linter, or formatter. `astro check` is the only automated gate.
 
 ## Architecture
 
-Static Astro 5 site (no adapter, no SSR) building a personal portfolio, deployed to GitHub Pages by [.github/workflows/deploy.yml](.github/workflows/deploy.yml) on every push to `main`.
+Static Astro 5 site (no adapter, no SSR) building a personal portfolio, deployed to **Cloudflare Workers static assets** by Cloudflare's own Workers Builds on every push to `main`. [.github/workflows/ci.yml](.github/workflows/ci.yml) only typechecks and builds — it does not deploy.
 
-### The base path is the thing to get right
+### Deploying: no worker, only assets
 
-The site is served from a GitHub Pages project subpath, so `base` is `/portfolio_v2/` in [astro.config.mjs](astro.config.mjs) — **constant across dev and production, deliberately**. It was previously `/` in dev and `/portfolio_v2/` in production, and that divergence hid three bugs that only manifested once deployed (a 404 at the site root, a language switcher that silently did nothing, a 404 favicon). Keeping dev on the base path means local browsing reproduces production. Don't reintroduce a `NODE_ENV` conditional here.
+[wrangler.jsonc](wrangler.jsonc) deliberately has **no `main`**. The site is fully static, so Wrangler uploads `dist/` as assets and Cloudflare serves them directly — no Worker invocation, no compute cost.
 
-Consequently, **every internal link must be built from `import.meta.env.BASE_URL`**, as [Header.astro](src/components/Header.astro) does. A hardcoded `/es/projects` resolves against the domain root and 404s in production only. This applies inside client `<script>` blocks too — Vite inlines `BASE_URL` there (see the language switcher in [BaseLayout.astro](src/layouts/BaseLayout.astro)). Relative links (`./technical`) are also wrong: Astro builds directory-style URLs, so they resolve one level too deep.
+This matters because of a failure mode already hit once: if an adapter (`@astrojs/cloudflare`) is ever added, Astro emits a `dist/_worker.js/` directory, and without a `main` entry Wrangler tries to upload that server bundle as *public* assets and aborts with `Uploading a Pages _worker.js directory as an asset`. The fix in that case is to add `"main": "./dist/_worker.js/index.js"` — **never** an empty `.assetsignore`, which merely silences the check and publishes the server code.
+
+`assets.not_found_handling` is `"404-page"`, which serves `dist/404.html` from [src/pages/404.astro](src/pages/404.astro). That page lives outside `[lang]/`, so it has no `Astro.params.lang` and cannot use `BaseLayout`; it is standalone and bilingual by design.
+
+[public/_headers](public/_headers) sets caching (immutable for the hashed `/_astro/*` bundles, revalidate-always for HTML) and a few security headers. Wrangler reads it from the root of `dist/` and does not serve it as an asset.
+
+### The base path
+
+`base` is `/` in [astro.config.mjs](astro.config.mjs) — Cloudflare serves the site at the root of the domain. It was `/portfolio_v2/` while the site lived on a GitHub Pages project subpath; if the deploy target ever moves back, that is the single line to change, and it must stay **identical in dev and production**. An earlier `NODE_ENV` conditional here (`/` in dev, subpath in prod) hid three bugs that only appeared once deployed: a 404 at the site root, a language switcher that silently did nothing, and a 404 favicon. Don't reintroduce it.
+
+That portability only holds because **every internal link is built from `import.meta.env.BASE_URL`**, as [Header.astro](src/components/Header.astro) does. Keep it that way even though `BASE_URL` is currently just `/`. This applies inside client `<script>` blocks too — Vite inlines `BASE_URL` there (see the language switcher in [BaseLayout.astro](src/layouts/BaseLayout.astro)). Relative links (`./technical`) are also wrong: Astro builds directory-style URLs, so they resolve one level too deep.
 
 ### Root redirect
 
