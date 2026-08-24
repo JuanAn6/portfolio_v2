@@ -7,6 +7,13 @@ const en: typeof es = {
         es: "Spanish",
         en: "English"
     },
+    kickers: {
+        profile: "Profile",
+        contact: "Contact",
+        catalog: "Catalog",
+        notes: "Notes",
+        detail: "Detail",
+    },
     nav: {
         home: "Home",
         projects: "Projects",

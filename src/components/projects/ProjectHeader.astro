@@ -1,0 +1,29 @@
+---
+// Cabecera común de las páginas de proyecto: el título condensado en versales
+// y las dos pestañas como un único control segmentado — la activa es la única
+// pieza sólida del tablero.
+interface Props {
+  title: string;
+  projectBase: string;
+  active: "info" | "technical";
+}
+
+const { title, projectBase, active } = Astro.props;
+---
+
+<div class="flex w-full flex-wrap items-center justify-between gap-6 pb-8">
+  <h1 class="font-heading text-4xl md:text-5xl font-semibold uppercase tracking-[0.02em]">{title}</h1>
+
+  <nav class="seg" aria-label={title}>
+    <a
+      href={`${projectBase}/info`}
+      class="seg-opt"
+      aria-current={active === "info" ? "page" : undefined}
+    >Information content</a>
+    <a
+      href={`${projectBase}/technical`}
+      class="seg-opt"
+      aria-current={active === "technical" ? "page" : undefined}
+    >Technical content</a>
+  </nav>
+</div>

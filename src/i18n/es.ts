@@ -5,6 +5,15 @@ export default {
         es: "Español",
         en: "Inglés"
     },
+    // Rótulos de sección: van sobre una regla dibujada y numerados ("01 · …"),
+    // la gramática de "hoja de plano" del sistema Industry.
+    kickers: {
+        profile: "Perfil",
+        contact: "Contacto",
+        catalog: "Catálogo",
+        notes: "Notas",
+        detail: "Detalle",
+    },
     nav: {
         home: "Inicio",
         projects: "Proyectos",

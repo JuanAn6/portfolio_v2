@@ -2,6 +2,7 @@
 import BaseLayout from '../../../../layouts/BaseLayout.astro';
 import type { Language } from '../../../../types/language.type';
 import ExampleProjectTechnicalComponent from '../../../../components/projects/ExampleProjectTechnicalComponent.astro';
+import ProjectHeader from '../../../../components/projects/ProjectHeader.astro';
 
 export { getStaticPaths } from '../../../../i18n';
 
@@ -10,16 +11,8 @@ const projectBase = `${import.meta.env.BASE_URL}${lang}/projects/example_project
 ---
 
 <BaseLayout title="Example project">
-  
   <div class='flex flex-col items-start'>
-    <div class="flex justify-between flex-wrap items-center w-full">
-      <h1 class='text-4xl font-bold'>Example project</h1>
-      <div class='flex gap-8'>
-        <a href={`${projectBase}/info`} class='block shadow rounded-xl p-3 hover:bg-cyan-100 bg-white font-bold cursor-pointer dark:bg-cyan-700 dark:hover:bg-cyan-500'>Information content</a>
-        <a href={`${projectBase}/technical`} class='block shadow rounded-xl p-3 hover:bg-cyan-100 bg-cyan-100 font-bold cursor-pointer dark:bg-cyan-500 dark:hover:bg-cyan-500'>Technical content</a>
-      </div>
-    </div>
-      <ExampleProjectTechnicalComponent />
+    <ProjectHeader title="Example project" projectBase={projectBase} active="technical" />
+    <ExampleProjectTechnicalComponent />
   </div>
 </BaseLayout>
-
