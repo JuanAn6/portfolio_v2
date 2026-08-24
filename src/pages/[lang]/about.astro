@@ -10,9 +10,15 @@ const t = getTranslations(lang);
 ---
 
 <BaseLayout title={`${t.about.title} — ${t.nav.portfolio}`}>
-  <h1 class="text-4xl font-bold">{t.about.title}</h1>
-  <p class="mt-4"></p>
-  <h2 class="text-2xl mt-10 font-bold" >
-    {t.workingOnThis}
-  </h2>
+  <section class="pb-12">
+    <h1 class="display">{t.about.title}</h1>
+  </section>
+
+  <section>
+    <span class="kicker">01 · {t.kickers.notes}</span>
+    <hr class="caption-rule" />
+    <p class="mt-8 font-heading text-2xl uppercase tracking-[0.04em] text-muted">
+      {t.workingOnThis}
+    </p>
+  </section>
 </BaseLayout>

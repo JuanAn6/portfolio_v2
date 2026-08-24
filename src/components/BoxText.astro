@@ -1,6 +1,9 @@
 ---
+import Corners from "./Corners.astro";
+
 let { text } = Astro.props
 ---
-<div class=" bg-gray-50 dark:bg-gray-700 rounded-xl shadow-md overflow-hidden hover:shadow-xl transition duration-300 transform hover:-translate-y-1 p-5 px-6">
+<div class="bp bp-hover p-6">
+    <Corners />
     { text }
 </div>

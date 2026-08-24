@@ -19,15 +19,27 @@ const projects = projectsByLang[lang];
 ---
 
 <BaseLayout title={`${t.projects.title} — ${t.nav.portfolio}`} description={t.projects.introduction}>
-  <h1 class="text-4xl font-bold">{t.projects.title}</h1>
-  <p class="mt-4">
-    {t.projects.introduction}
-  </p>
-  <!-- <h2 class="text-2xl mt-10 font-bold" >
-    {t.workingOnThis}
-  </h2> -->
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-8 mt-8">
-    { projects.map((p) => <ProjectCard project={p} /> ) }
-  </div>
-  
+  <section class="pb-12">
+    <h1 class="display">{t.projects.title}</h1>
+    <p class="mt-6 max-w-[60ch] text-muted">
+      {t.projects.introduction}
+    </p>
+  </section>
+
+  <section>
+    <span class="kicker">01 · {t.kickers.catalog}</span>
+    <hr class="caption-rule" />
+
+    <!-- Las marcas de registro sobresalen 7px del marco, así que la separación
+         entre celdas guarda una unidad completa de aire. -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-10 mt-8">
+      { projects.map((p) => <ProjectCard project={p} /> ) }
+    </div>
+
+    {projects.length === 0 && (
+      <p class="mt-8 font-heading text-xl uppercase tracking-[0.04em] text-muted">
+        {t.workingOnThis}
+      </p>
+    )}
+  </section>
 </BaseLayout>

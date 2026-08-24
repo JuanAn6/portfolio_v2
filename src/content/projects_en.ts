@@ -1,10 +1,13 @@
 import type { Project } from "../types/project.type";
 
+import file_manager from '../assets/imgs/file_manager.png';
+import library_manager from '../assets/imgs/library_manager.png';
+
 const projects: Project[] = [
     {
         title: 'File manager',
         description: 'A complete file manager, it can be installed on a private server to keep sensitive documents centralized and private.',
-        img: 'https://picsum.photos/400/300?greyscale&random=1',
+        img: file_manager.src,
         link: 'file_manager/info',
         show_link: false,
         git_hub_link: 'https://github.com/JuanAn6/file_manager',
@@ -15,7 +18,7 @@ const projects: Project[] = [
     {
         title: 'Library manager',
         description: 'A small application to manage book loans, the books inside the library and a user portal to request or return books.',
-        img: 'https://picsum.photos/400/300?greyscale&random=2',
+        img: library_manager.src,
         link: 'library_manager/info',
         show_link: false,
         git_hub_link: 'https://github.com/JuanAn6/library_manager',

@@ -53,7 +53,17 @@ Adding a locale touches: `locales` in [astro.config.mjs](astro.config.mjs), the 
 
 Tailwind v4 via the `@tailwindcss/vite` plugin, configured CSS-first in [src/styles/global.css](src/styles/global.css), which `BaseLayout` imports. Dark mode is a **class** strategy defined there by `@custom-variant dark (&:where(.dark, .dark *))`, toggled on `<html>` by an inline script in `BaseLayout`'s `<head>` (reads `localStorage.theme`, falls back to `prefers-color-scheme`) and flipped by [ThemeToggle.astro](src/components/ThemeToggle.astro). The inline script must stay in `<head>` and stay `is:inline` to avoid a flash of the wrong theme.
 
-[tailwind.config.js](tailwind.config.js) is vestigial — Tailwind v4 does not read it in this setup. Change styling config in `global.css`, not there. Any new element with a `bg-*` needs a matching `dark:` variant.
+[tailwind.config.js](tailwind.config.js) is vestigial — Tailwind v4 does not read it in this setup. Change styling config in `global.css`, not there.
+
+#### The Industry design system
+
+The visual language is a port of the **Industry** design system from Claude Design (steel-blue on a light technical ground, Barlow Condensed headings over Barlow, everything framed as a square, hairline-bordered wireframe object with `+` registration marks at the corners). `global.css` carries it in three parts:
+
+1. **Raw tokens** — `--ind-*` custom properties on `:root`, redefined on `:root.dark`. Write the dark override as `:root.dark`, **not** `:where(.dark)`: `:where()` has zero specificity and the `:root` block above it wins, which silently kills the dark theme.
+2. **`@theme inline`** — exposes the tokens as the Tailwind scale (`bg-paper`, `text-ink`, `text-steel-text`, `border-rule`, `text-muted`, `font-heading`, the `steel-100…900` ramp). Because it's `inline`, utilities point straight at the `--ind-*` variables, so **a `bg-*` built on these tokens needs no `dark:` variant** — the token swap does it. Only hard-coded palette colors (`bg-gray-200` and friends) would; don't use them.
+3. **A component layer** — `.bp` (the wireframe frame) plus [Corners.astro](src/components/Corners.astro) for its four `<i class="corner …">` marks, `.duotone` (photographs are desaturated and washed in the accent), `.kicker` + `.caption-rule` (numbered section labels over a drawn rule), `.btn`, `.tag`, `.input`, `.seg`, `.table`, `.display`.
+
+House rules: nothing rounded, cards and figures stay transparent line drawings, the primary button is the one solid object on the page, icons are Lucide at stroke-width 1.5. `.bp` draws its corner marks *outside* the box, so a framed element needs ≥8px of clearance from its neighbours — that's why grids use `gap-10`.
 
 ### Content and layouts
 
@@ -61,4 +71,4 @@ Projects are typed `Project[]` arrays in [src/content/projects_es.ts](src/conten
 
 Per-project detail pages are hand-built page + component pairs (see [src/pages/\[lang\]/projects/example_project/](src/pages/[lang]/projects/example_project/) with `info`/`technical` tabs and matching components in [src/components/projects/](src/components/projects/)), not generated from the arrays. `example_project` is lorem ipsum scaffolding serving as the template; a project's `link` field points at such a page (e.g. `example_project/info`).
 
-`Box*` components in [src/components/](src/components/) are presentational card wrappers sharing one long Tailwind class string; `BoxComponent` and `BoxComponentFullSize` currently differ only by `h-fit`.
+`Box*` components in [src/components/](src/components/) are presentational card wrappers — a `.bp` wireframe frame plus `Corners`; `BoxComponent` and `BoxComponentFullSize` currently differ only by `h-fit`. The two tabs on a project page come from [ProjectHeader.astro](src/components/projects/ProjectHeader.astro), which renders them as one `.seg` control and marks the active one with `aria-current="page"` — that attribute, not a class, is what fills it with the accent.

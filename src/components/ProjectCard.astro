@@ -1,4 +1,5 @@
 ---
+import Corners from "./Corners.astro";
 import Github from "../assets/github.astro";
 import { getTranslations } from "../i18n";
 import type { Language } from "../types/language.type";
@@ -15,52 +16,55 @@ const { project } = Astro.props;
 const href = `${import.meta.env.BASE_URL}${lang}/projects/${project.link}`;
 ---
 
-<div class="bg-gray-50 dark:bg-gray-700 rounded-xl shadow-md overflow-hidden hover:shadow-xl transition duration-300 transform hover:-translate-y-1">
-  <img
-    class="w-full h-48 object-cover"
-    src={project.img}
-    alt={project.title}
-  />
-  <div class="p-6 h-50 flex flex-col justify-between">
+<!-- Celda de wireframe: cuadrada, transparente, con marcas de registro. La
+     fotografía pasa por el duotono de acero, como una serigrafía. -->
+<article class="bp bp-hover flex flex-col">
+  <Corners />
+
+  <div class="duotone border-b border-rule">
+    <img
+      class="w-full h-48 object-cover"
+      src={project.img}
+      alt={project.title}
+    />
+  </div>
+
+  <div class="p-6 flex flex-1 flex-col justify-between gap-6">
     <div>
-    <div class="flex justify-between">
-      <div class="flex items-center">
-        <h3 class="text-xl font-bold text-cyan-700 dark:text-cyan-500 mb-2">{project.title}</h3>
-        {project.working && <span class="block mb-2 text-xs text-cyan-700 dark:text-cyan-500">&nbsp;({t.projects.developing})</span> }
+      <div class="flex items-start justify-between gap-4">
+        <div>
+          {project.working && <span class="kicker">{t.projects.developing}</span>}
+          <h3 class="font-heading text-xl font-semibold uppercase tracking-[0.02em]">{project.title}</h3>
+        </div>
+        {project.git_hub_link_show &&
+          <a
+            href={project.git_hub_link}
+            aria-label={`${project.title} — GitHub`}
+            class="btn btn-icon shrink-0"
+          ><Github/></a>
+        }
       </div>
-      { project.git_hub_link_show && 
-        <a
-          href={project.git_hub_link}
-          class=" inline-flex text-sm font-semibold text-cyan-700 dark:text-cyan-500 hover:text-cyan-200"
-        ><Github/></a>
-      }
+      <p class="mt-3 text-muted line-clamp-3">
+        {project.description}
+      </p>
     </div>
-    <p class="text-gray-600 dark:text-gray-100 line-clamp-3">
-      {project.description}
-    </p>
-    </div>
-    <div class="flex justify-between">
-      <div class="mt-4 flex flex-wrap gap-2">
+
+    <div class="flex flex-wrap items-end justify-between gap-4">
+      <div class="flex flex-wrap gap-2">
         {project.stack.map((item) => (
-          <span class="inline-flex items-center rounded-full border border-cyan-200 bg-cyan-50 px-3 py-1 text-xs font-medium text-cyan-800 dark:border-cyan-700 dark:bg-cyan-900/40 dark:text-cyan-200">
-            {item}
-          </span>
+          <span class="tag tag-accent">{item}</span>
         ))}
       </div>
       {project.show_link && (
-        <a
-          href={href}
-          class="mt-4 inline-flex text-sm font-semibold text-cyan-700 dark:text-cyan-500 hover:text-cyan-200"
-        >
-          {t.projects.show_details}&nbsp;
-          <!-- #007595 color -->
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > 
-            <path d="M12 6h-6a2 2 0 0 0 -2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-6" /> 
-            <path d="M11 13l9 -9" /> 
-            <path d="M15 4h5v5" /> 
+        <a href={href} class="btn btn-ghost shrink-0">
+          {t.projects.show_details}
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 6h-6a2 2 0 0 0 -2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-6" />
+            <path d="M11 13l9 -9" />
+            <path d="M15 4h5v5" />
           </svg>
         </a>
       )}
     </div>
   </div>
-</div>
+</article>

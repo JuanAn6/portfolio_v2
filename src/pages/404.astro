@@ -32,28 +32,21 @@ const base = import.meta.env.BASE_URL;
     </script>
   </head>
 
-  <body class="bg-gray-200 dark:bg-gray-800 text-gray-900 dark:text-gray-100">
-    <main class="max-w-6xl mx-auto p-6 min-h-screen flex flex-col items-center justify-center gap-6 text-center">
-      <p class="text-6xl font-bold text-gray-400 dark:text-gray-500">404</p>
+  <body class="bg-paper text-ink">
+    <main class="max-w-6xl mx-auto p-6 min-h-screen flex flex-col items-center justify-center gap-8 text-center">
+      <span class="kicker">Error 404</span>
+
+      <!-- La hoja no existe en el juego de planos: una cifra dibujada, no un adorno. -->
+      <p class="font-heading text-[clamp(72px,16vw,160px)] leading-none font-semibold text-furniture">404</p>
 
       <div class="space-y-1">
-        <p class="text-xl">Esta página no existe.</p>
-        <p class="text-xl text-gray-600 dark:text-gray-400">This page doesn't exist.</p>
+        <p class="font-heading text-2xl uppercase tracking-[0.04em]">Esta página no existe.</p>
+        <p class="font-heading text-2xl uppercase tracking-[0.04em] text-muted">This page doesn't exist.</p>
       </div>
 
-      <div class="flex gap-4">
-        <a
-          href={`${base}es/`}
-          class="rounded-lg px-4 py-2 bg-gray-300 dark:bg-gray-700 hover:bg-gray-400 dark:hover:bg-gray-600 transition-colors"
-        >
-          Ir al inicio
-        </a>
-        <a
-          href={`${base}en/`}
-          class="rounded-lg px-4 py-2 bg-gray-300 dark:bg-gray-700 hover:bg-gray-400 dark:hover:bg-gray-600 transition-colors"
-        >
-          Go home
-        </a>
+      <div class="flex flex-wrap justify-center gap-4">
+        <a href={`${base}es/`} class="btn btn-primary">Ir al inicio</a>
+        <a href={`${base}en/`} class="btn btn-secondary">Go home</a>
       </div>
     </main>
   </body>

@@ -4,6 +4,7 @@ import { getTranslations } from "../../i18n";
 import type { Language } from "../../types/language.type";
 import BoxText from '../../components/BoxText.astro';
 import BoxComponent from '../../components/BoxComponent.astro';
+import Corners from '../../components/Corners.astro';
 import profile from '../../assets/imgs/profile.png';
 import Github from '../../assets/github.astro';
 import Linkedin from '../../assets/linkedin.astro';
@@ -16,38 +17,53 @@ const t = getTranslations(lang);
 ---
 
 <BaseLayout>
-  
-  <div class="flex flex-col items-start">
-      <h1 class="text-4xl font-bold ">{t.home.title}</h1>
-      <h2 class="text-2xl mt-3">{t.home.subtitle}</h2>
-  </div>
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
-    <div class="flex-col flex gap-8 md:col-span-2">
-      <BoxText text={t.home.introduce_my_self}></BoxText>
-      <BoxText text={t.home.introduce_my_characteristics}></BoxText>
-      <BoxText text={t.home.introduce_my_objectives}></BoxText>
+
+  <!-- Portada: condensada en versales, alineada ópticamente a la izquierda. -->
+  <section class="pb-12">
+    <h1 class="display">{t.home.title}</h1>
+    <p class="mt-6 font-heading text-2xl md:text-3xl font-semibold uppercase tracking-[0.02em] text-steel-text">
+      {t.home.subtitle}
+    </p>
+  </section>
+
+  <section class="pb-12">
+    <span class="kicker">01 · {t.kickers.profile}</span>
+    <hr class="caption-rule" />
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-10 mt-8">
+      <div class="flex flex-col gap-10 md:col-span-2">
+        <BoxText text={t.home.introduce_my_self}></BoxText>
+        <BoxText text={t.home.introduce_my_characteristics}></BoxText>
+        <BoxText text={t.home.introduce_my_objectives}></BoxText>
+      </div>
+
+      <!-- El retrato recibe el mismo trato que cualquier figura: cuadrado,
+           enmarcado a un pelo, marcado y duotonado en acero. -->
+      <figure class="bp duotone h-fit">
+        <Corners />
+        <img src={profile.src} alt="Juan Antonio García Jiménez" />
+      </figure>
+    </div>
+  </section>
+
+  <section class="pb-6">
+    <span class="kicker">02 · {t.kickers.contact}</span>
+    <hr class="caption-rule" />
+
+    <div class="mt-8">
       <BoxComponent>
-        <div class="flex items-center justify-evenly">
-          <a class="flex items-center hover:text-blue-600 transition" target="_blank" href="https://es.linkedin.com/in/juan-antonio-garc%C3%ADa-jim%C3%A9nez-651078236">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+          <a class="btn btn-ghost" target="_blank" href="https://es.linkedin.com/in/juan-antonio-garc%C3%ADa-jim%C3%A9nez-651078236">
             <Linkedin /> Linkedin
           </a>
-          <a class="flex items-center transition hover:text-gray-400" target="_blank" href="https://github.com/JuanAn6">
+          <a class="btn btn-ghost" target="_blank" href="https://github.com/JuanAn6">
             <Github/> JuanAn6
           </a>
-          <a class="flex items-center hover:text-red-600 transition" target="_blank" href="mailto:juanangarciaji@gmail.com">
+          <a class="btn btn-ghost" target="_blank" href="mailto:juanangarciaji@gmail.com">
             <Email/> juanangarciaji@gmail.com
           </a>
         </div>
       </BoxComponent>
-      
     </div>
-    <div class="grid grid-cols-1 gap-8">
-      <div class="flex">
-        <BoxComponent>
-          <img src={profile.src} />
-        </BoxComponent>
-      </div>
-    </div>
-  </div>
+  </section>
 </BaseLayout>
-

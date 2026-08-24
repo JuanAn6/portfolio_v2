@@ -13,36 +13,60 @@ const languageOptions = languages.map((code) => ({
 
 const baseUrl = import.meta.env.BASE_URL;
 
+const navLinks = [
+  { href: `${baseUrl}${lang}`, label: t.nav.home },
+  { href: `${baseUrl}${lang}/projects`, label: t.nav.projects },
+  { href: `${baseUrl}${lang}/about`, label: t.nav.about_me },
+];
 ---
 
-<header class="w-full bg-white dark:bg-gray-900 shadow sticky top-0 z-50">
-  <nav class="max-w-6xl mx-auto flex flex-wrap items-center justify-between p-4">
-    <a href={`${baseUrl}${lang}`} class="text-xl font-bold text-cyan-700">
+<!-- La cabecera es la primera regla dibujada de la página: sin sombra ni
+     esquinas redondeadas, solo un pelo de línea contra el papel. -->
+<header class="w-full bg-paper border-b border-rule sticky top-0 z-50">
+  <nav class="max-w-6xl mx-auto flex flex-wrap items-center justify-between px-6 py-4">
+    <a
+      href={`${baseUrl}${lang}`}
+      class="font-heading text-xl font-semibold uppercase tracking-[0.06em] text-ink no-underline hover:text-steel-text"
+    >
       {t.nav.portfolio}
     </a>
 
-    <button 
+    <button
       id="menu-btn"
       aria-label="Toggle Menu"
-      class="md:hidden p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded focus:outline-none"
+      aria-expanded="false"
+      aria-controls="menu-items"
+      class="btn btn-icon md:hidden"
     >
-      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path id="menu-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true">
+        <path id="menu-icon" stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16m-7 6h7"></path>
       </svg>
     </button>
 
-    <div id="menu-items" class="hidden w-full md:flex md:w-auto md:items-center transition-all duration-300 ease-in-out">
-      <div class="flex flex-col md:flex-row items-start md:items-center gap-6 mt-4 md:mt-0 pb-4 md:pb-0">
-        
-        <ul class="flex flex-col md:flex-row gap-6 text-sm font-medium w-full">
-          <li><a href={`${baseUrl}${lang}`} class="hover:text-cyan-500 block w-full">{t.nav.home}</a></li>
-          <li><a href={`${baseUrl}${lang}/projects`} class="hover:text-cyan-500 block w-full">{t.nav.projects}</a></li>
-          <li><a href={`${baseUrl}${lang}/about`} class="hover:text-cyan-500 block w-full">{t.nav.about_me}</a></li>
+    <div id="menu-items" class="hidden w-full md:flex md:w-auto md:items-center">
+      <div class="flex flex-col md:flex-row items-stretch md:items-center gap-6 mt-4 md:mt-0 pb-4 md:pb-0">
+
+        <ul class="flex flex-col md:flex-row gap-6 w-full">
+          {navLinks.map((link) => (
+            <li>
+              <a
+                href={link.href}
+                class="block w-full font-heading text-sm font-semibold uppercase tracking-[0.08em] text-ink no-underline hover:text-steel-text"
+              >
+                {link.label}
+              </a>
+            </li>
+          ))}
         </ul>
 
-        <div class="flex items-center gap-4 border-t md:border-t-0 border-gray-100 dark:border-gray-800 pt-4 md:pt-0 w-full md:w-auto">
+        <div class="flex items-center gap-4 border-t md:border-t-0 border-rule pt-4 md:pt-0 w-full md:w-auto">
           <form id="lang-form">
-            <select id="lang-select" class="dark:bg-gray-800 cursor-pointer p-1 rounded focus:outline-none ring-1 ring-transparent hover:ring-gray-300 dark:hover:ring-gray-600 text-sm">
+            <!-- Cuadrado y de un pelo, como el resto de controles del sistema. -->
+            <select
+              id="lang-select"
+              aria-label="Language"
+              class="input w-auto min-h-0 cursor-pointer py-1 font-heading text-sm uppercase tracking-[0.06em]"
+            >
               {languageOptions.map((langOpt) => (
                 <option value={langOpt.code} selected={langOpt.code === lang}>
                   {langOpt.label}
@@ -61,14 +85,15 @@ const baseUrl = import.meta.env.BASE_URL;
   const btn = document.getElementById('menu-btn');
   const menu = document.getElementById('menu-items');
   const menuIcon = document.getElementById('menu-icon');
-  
+
   const burgerPath = "M4 6h16M4 12h16m-7 6h7";
   const closePath = "M6 18L18 6M6 6l12 12";
-  
+
   btn?.addEventListener('click', () => {
     menu?.classList.toggle('hidden');
     const isHidden = menu?.classList.contains('hidden');
     menuIcon?.setAttribute('d', isHidden ? burgerPath : closePath);
+    btn.setAttribute('aria-expanded', String(!isHidden));
   });
 
 </script>
