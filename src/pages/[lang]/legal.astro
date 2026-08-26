@@ -1,0 +1,73 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import BoxComponent from "../../components/BoxComponent.astro";
+import { getTranslations } from "../../i18n";
+import { legalOwner } from "../../content/legal";
+import type { Language } from "../../types/language.type";
+
+export { getStaticPaths } from "../../i18n";
+
+const lang = Astro.params.lang as Language;
+const t = getTranslations(lang);
+
+// Identification data required by article 10 of Law 34/2002; the values are
+// locale-independent and live in src/content/legal.ts.
+const identification = [
+  { label: t.legal.identification.name, value: legalOwner.name },
+  { label: t.legal.identification.nif, value: legalOwner.nif },
+  { label: t.legal.identification.location, value: legalOwner.location },
+  { label: t.legal.identification.email, value: legalOwner.email, href: `mailto:${legalOwner.email}` },
+  { label: t.legal.identification.site, value: legalOwner.site, href: `https://${legalOwner.site}` },
+].filter((row) => row.value !== "");
+---
+
+<BaseLayout title={`${t.legal.title} — ${t.nav.my_name}`} description={t.legal.intro}>
+  <section class="pb-12">
+    <h1 class="display">{t.legal.title}</h1>
+    <p class="mt-6 max-w-[70ch] text-muted">{t.legal.intro}</p>
+  </section>
+
+  <section class="pb-12">
+    <span class="kicker">01 · {t.legal.identification.kicker}</span>
+    <hr class="caption-rule" />
+
+    <div class="mt-8">
+      <BoxComponent>
+        <table class="table">
+          <tbody>
+            {identification.map((row) => (
+              <tr>
+                <th scope="row" class="w-[40%] sm:w-[25%]">{row.label}</th>
+                <td>
+                  {row.href
+                    ? <a class="text-steel-text no-underline hover:text-ink" href={row.href}>{row.value}</a>
+                    : row.value}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </BoxComponent>
+    </div>
+  </section>
+
+  <section>
+    <span class="kicker">02 · {t.legal.termsKicker}</span>
+    <hr class="caption-rule" />
+
+    <div class="mt-8 flex flex-col gap-10">
+      {t.legal.sections.map((section, i) => (
+        <article>
+          <h2 class="font-heading text-xl font-semibold uppercase tracking-[0.06em]">
+            {String(i + 1).padStart(2, "0")} · {section.title}
+          </h2>
+          <p class="mt-3 max-w-[70ch] text-muted">{section.body}</p>
+        </article>
+      ))}
+    </div>
+
+    <p class="mt-12 text-sm text-muted">
+      {t.legal.lastUpdatedLabel}: {t.legal.lastUpdated}
+    </p>
+  </section>
+</BaseLayout>

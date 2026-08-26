@@ -1,0 +1,105 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import BoxComponent from "../../components/BoxComponent.astro";
+import { getTranslations, languages } from "../../i18n";
+import type { Language } from "../../types/language.type";
+import type { Project } from "../../types/project.type";
+
+import projectsEs from "../../content/projects_es";
+import projectsEn from "../../content/projects_en";
+import projectsCa from "../../content/projects_ca";
+
+export { getStaticPaths } from "../../i18n";
+
+const lang = Astro.params.lang as Language;
+const t = getTranslations(lang);
+const base = import.meta.env.BASE_URL;
+
+const projectsByLang: Record<Language, Project[]> = { es: projectsEs, en: projectsEn, ca: projectsCa };
+
+// Only projects whose detail page is actually published: `show_link` is what
+// the catalog uses to decide whether the page behind `link` exists yet.
+const projectPages = projectsByLang[lang]
+  .filter((p) => p.show_link)
+  .map((p) => ({ href: `${base}${lang}/projects/${p.link}`, label: p.title }));
+
+const pages = [
+  { href: `${base}${lang}`, label: t.nav.home },
+  { href: `${base}${lang}/projects`, label: t.nav.projects },
+  { href: `${base}${lang}/about`, label: t.nav.about_me },
+];
+
+const legalPages = [
+  { href: `${base}${lang}/legal`, label: t.nav.legal },
+  { href: `${base}${lang}/sitemap`, label: t.nav.sitemap },
+];
+
+const otherLanguages = languages
+  .filter((code) => code !== lang)
+  .map((code) => ({ href: `${base}${code}`, label: t.languageOptions[code] }));
+---
+
+<BaseLayout title={`${t.sitemap.title} — ${t.nav.my_name}`} description={t.sitemap.introduction}>
+  <section class="pb-12">
+    <h1 class="display">{t.sitemap.title}</h1>
+    <p class="mt-6 max-w-[60ch] text-muted">{t.sitemap.introduction}</p>
+  </section>
+
+  <section class="pb-12">
+    <span class="kicker">01 · {t.sitemap.kickerPages}</span>
+    <hr class="caption-rule" />
+
+    <div class="mt-8">
+      <BoxComponent>
+        <ul class="flex flex-col gap-3">
+          {pages.map((page) => (
+            <li>
+              <a class="btn btn-ghost" href={page.href}>{page.label}</a>
+            </li>
+          ))}
+          {projectPages.map((page) => (
+            <li class="pl-6">
+              <a class="btn btn-ghost" href={page.href}>{page.label}</a>
+            </li>
+          ))}
+        </ul>
+      </BoxComponent>
+    </div>
+  </section>
+
+  <section class="pb-12">
+    <span class="kicker">02 · {t.sitemap.kickerLegal}</span>
+    <hr class="caption-rule" />
+
+    <div class="mt-8">
+      <BoxComponent>
+        <ul class="flex flex-col gap-3">
+          {legalPages.map((page) => (
+            <li>
+              <a class="btn btn-ghost" href={page.href}>{page.label}</a>
+            </li>
+          ))}
+        </ul>
+      </BoxComponent>
+    </div>
+  </section>
+
+  <section>
+    <span class="kicker">03 · {t.sitemap.kickerLanguages}</span>
+    <hr class="caption-rule" />
+
+    <p class="mt-8 max-w-[60ch] text-muted">{t.sitemap.languagesIntro}</p>
+
+    <div class="mt-8">
+      <BoxComponent>
+        <ul class="flex flex-wrap gap-6">
+          {otherLanguages.map((option) => (
+            <li>
+              <a class="btn btn-ghost" href={option.href}>{option.label}</a>
+            </li>
+          ))}
+        </ul>
+      </BoxComponent>
+    </div>
+  </section>
+</BaseLayout>

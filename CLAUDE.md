@@ -49,6 +49,10 @@ Spanish (default), English and Catalan, routed under `/es/…`, `/en/…` and `/
 
 Adding a locale touches: `locales` in [astro.config.mjs](astro.config.mjs), the `Language` union in [src/types/language.type.ts](src/types/language.type.ts), a new `src/i18n/<lang>.ts`, the `dictionaries` map in [src/i18n/index.ts](src/i18n/index.ts), a `languageOptions` entry in each dictionary, a `src/content/projects_<lang>.ts` wired into `projectsByLang`, and the hand-written locale block in [404.astro](src/pages/404.astro). Pages and the switcher derive everything else.
 
+### Legal pages
+
+Spanish LSSICE requires a reachable legal notice, so every page carries a [Footer.astro](src/components/Footer.astro) with the copyright line and links to [/[lang]/legal](src/pages/[lang]/legal.astro) (aviso legal) and [/[lang]/sitemap](src/pages/[lang]/sitemap.astro). The route slugs stay untranslated so one file serves all locales; only the text is per-locale. The owner identification data (name, NIF, location, email, domain) is locale-independent and lives in [src/content/legal.ts](src/content/legal.ts) — the dictionary supplies the labels, that file the values. There is deliberately no cookie banner and no privacy policy: the site sets no analytics cookies (only localStorage for theme and language, exempt under art. 22.2) and has no contact form, just a mailto: link. **Adding a contact form would change that** — it would require a privacy policy and an unticked consent checkbox.
+
 ### Styling
 
 Tailwind v4 via the `@tailwindcss/vite` plugin, configured CSS-first in [src/styles/global.css](src/styles/global.css), which `BaseLayout` imports. Dark mode is a **class** strategy defined there by `@custom-variant dark (&:where(.dark, .dark *))`, toggled on `<html>` by an inline script in `BaseLayout`'s `<head>` (reads `localStorage.theme`, falls back to `prefers-color-scheme`) and flipped by [ThemeToggle.astro](src/components/ThemeToggle.astro). The inline script must stay in `<head>` and stay `is:inline` to avoid a flash of the wrong theme.
