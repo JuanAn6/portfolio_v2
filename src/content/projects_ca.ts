@@ -6,8 +6,8 @@ import charts3dimg from '../assets/imgs/chart3dimg.png';
 
 const projects: Project[] = [
     {
-        title: 'Gestor de archivos',
-        description: 'Gestor de archivos integral, se puede instalar en un servidor privado para mantener documentos sesibles centralizados y privados.',
+        title: 'Gestor d\'arxius',
+        description: 'Gestor d\'arxius integral, es pot instal·lar en un servidor privat per mantenir documents sensibles centralitzats i privats.',
         img: file_manager.src,
         link: 'file_manager/info',
         show_link: false,
@@ -18,7 +18,7 @@ const projects: Project[] = [
     },
     {
         title: 'Gestor de biblioteca',
-        description: 'Una pequeña aplicación para poder gestionar los prestamos de libros, los libros dentro de la biblioteca y portal de usuario para solicitar o devolver los libros.',
+        description: 'Una petita aplicació per gestionar els préstecs de llibres, els llibres dins de la biblioteca i un portal d\'usuari per sol·licitar o retornar els llibres.',
         img: library_manager.src,
         link: 'library_manager/info',
         show_link: false,
@@ -29,7 +29,7 @@ const projects: Project[] = [
     },
     {
         title: 'Charts 3d',
-        description: 'Una pequeña librería para crear gráficos 3D interactivos que se pueden rotar y ver desde cualquier ángulo.',
+        description: 'Una petita llibreria per crear gràfics 3D interactius que es poden girar i veure des de qualsevol angle.',
         img: charts3dimg.src,
         link: 'charts-3d/info',
         show_link: false,

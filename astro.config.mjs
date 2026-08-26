@@ -9,7 +9,7 @@ export default defineConfig({
   },
   i18n: {
     defaultLocale: 'es',
-    locales: ['es', 'en'],
+    locales: ['es', 'en', 'ca'],
     routing: {
       prefixDefaultLocale: true,
       // Astro's own redirect for `/` yields a bodyless response that a static

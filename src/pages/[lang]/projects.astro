@@ -7,6 +7,7 @@ import type { Project } from "../../types/project.type";
 
 import projectsEs from '../../content/projects_es';
 import projectsEn from '../../content/projects_en';
+import projectsCa from '../../content/projects_ca';
 import ProjectCard from '../../components/ProjectCard.astro'
 
 export { getStaticPaths } from "../../i18n";
@@ -14,11 +15,11 @@ export { getStaticPaths } from "../../i18n";
 const lang = Astro.params.lang as Language;
 const t = getTranslations(lang);
 
-const projectsByLang: Record<Language, Project[]> = { es: projectsEs, en: projectsEn };
+const projectsByLang: Record<Language, Project[]> = { es: projectsEs, en: projectsEn, ca: projectsCa };
 const projects = projectsByLang[lang];
 ---
 
-<BaseLayout title={`${t.projects.title} — ${t.nav.portfolio}`} description={t.projects.introduction}>
+<BaseLayout title={`${t.projects.title} — ${t.nav.my_name}`} description={t.projects.introduction}>
   <section class="pb-12">
     <h1 class="display">{t.projects.title}</h1>
     <p class="mt-6 max-w-[60ch] text-muted">
@@ -30,8 +31,8 @@ const projects = projectsByLang[lang];
     <span class="kicker">01 · {t.kickers.catalog}</span>
     <hr class="caption-rule" />
 
-    <!-- Las marcas de registro sobresalen 7px del marco, así que la separación
-         entre celdas guarda una unidad completa de aire. -->
+    <!-- The registration marks stick out 7px from the frame, so the gap between
+         cells keeps a full unit of air. -->
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-10 mt-8">
       { projects.map((p) => <ProjectCard project={p} /> ) }
     </div>

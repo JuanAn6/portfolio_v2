@@ -1,12 +1,18 @@
 export default {
     languageLabel: "Idioma",
+    themeLabel: "Cambiar tema",
+    menuLabel: "Abrir menú",
     workingOnThis: "Disponible dentro de poco!",
+    // Language names are always written in their own language, never
+    // translated: the switcher has to be readable by someone who cannot read
+    // the locale they are currently on.
     languageOptions: {
         es: "Español",
-        en: "Inglés"
+        en: "English",
+        ca: "Català"
     },
-    // Rótulos de sección: van sobre una regla dibujada y numerados ("01 · …"),
-    // la gramática de "hoja de plano" del sistema Industry.
+    // Section labels: they sit above a drawn rule and are numbered ("01 · …"),
+    // the "blueprint sheet" grammar of the Industry system.
     kickers: {
         profile: "Perfil",
         contact: "Contacto",
@@ -19,6 +25,7 @@ export default {
         projects: "Proyectos",
         about_me: "Sobre mí",
         portfolio: "Portafolio",
+        my_name: "Juan Antonio",
     },
     home: {
         title: "Hola, soy Juan Antonio García Jiménez",

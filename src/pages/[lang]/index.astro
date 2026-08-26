@@ -18,7 +18,7 @@ const t = getTranslations(lang);
 
 <BaseLayout>
 
-  <!-- Portada: condensada en versales, alineada ópticamente a la izquierda. -->
+  <!-- Cover: condensed in caps, optically aligned to the left. -->
   <section class="pb-12">
     <h1 class="display">{t.home.title}</h1>
     <p class="mt-6 font-heading text-2xl md:text-3xl font-semibold uppercase tracking-[0.02em] text-steel-text">
@@ -37,9 +37,8 @@ const t = getTranslations(lang);
         <BoxText text={t.home.introduce_my_objectives}></BoxText>
       </div>
 
-      <!-- El retrato recibe el mismo trato que cualquier figura: cuadrado,
-           enmarcado a un pelo, marcado y duotonado en acero. -->
-      <figure class="bp duotone h-fit">
+      <!-- This image must not have duotone -->
+      <figure class="bp h-fit">
         <Corners />
         <img src={profile.src} alt="Juan Antonio García Jiménez" />
       </figure>

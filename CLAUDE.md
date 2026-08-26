@@ -25,7 +25,7 @@ Static Astro 5 site (no adapter, no SSR) building a personal portfolio, deployed
 
 This matters because of a failure mode already hit once: if an adapter (`@astrojs/cloudflare`) is ever added, Astro emits a `dist/_worker.js/` directory, and without a `main` entry Wrangler tries to upload that server bundle as *public* assets and aborts with `Uploading a Pages _worker.js directory as an asset`. The fix in that case is to add `"main": "./dist/_worker.js/index.js"` — **never** an empty `.assetsignore`, which merely silences the check and publishes the server code.
 
-`assets.not_found_handling` is `"404-page"`, which serves `dist/404.html` from [src/pages/404.astro](src/pages/404.astro). That page lives outside `[lang]/`, so it has no `Astro.params.lang` and cannot use `BaseLayout`; it is standalone and bilingual by design.
+`assets.not_found_handling` is `"404-page"`, which serves `dist/404.html` from [src/pages/404.astro](src/pages/404.astro). That page lives outside `[lang]/`, so it has no `Astro.params.lang` and cannot use `BaseLayout`; it is standalone and spells out every locale by hand.
 
 [public/_headers](public/_headers) sets caching (immutable for the hashed `/_astro/*` bundles, revalidate-always for HTML) and a few security headers. Wrangler reads it from the root of `dist/` and does not serve it as an asset.
 
@@ -41,13 +41,13 @@ That portability only holds because **every internal link is built from `import.
 
 ### i18n
 
-Spanish (default) and English, routed under `/es/…` and `/en/…`. Astro's `i18n` config handles routing; the translation layer is hand-rolled but centralized in [src/i18n/index.ts](src/i18n/index.ts), which is the only place that knows the locale list:
+Spanish (default), English and Catalan, routed under `/es/…`, `/en/…` and `/ca/…`. Astro's `i18n` config handles routing; the translation layer is hand-rolled but centralized in [src/i18n/index.ts](src/i18n/index.ts), which is the only place that knows the locale list:
 
 - `getTranslations(lang)` returns the dictionary; `getStaticPaths` is shared by every page under `[lang]/` via `export { getStaticPaths } from "…/i18n"`.
-- [es.ts](src/i18n/es.ts) is the source of truth. [en.ts](src/i18n/en.ts) is annotated `typeof es`, so a missing or misspelled key is a build error rather than `undefined` rendered to a visitor. Keep that annotation on any new locale.
+- [es.ts](src/i18n/es.ts) is the source of truth. [en.ts](src/i18n/en.ts) and [ca.ts](src/i18n/ca.ts) are annotated `typeof es`, so a missing or misspelled key is a build error rather than `undefined` rendered to a visitor. Keep that annotation on any new locale. `languageOptions` is the one dictionary entry that is *not* translated: every locale lists the language names in their own language (Español / English / Català), so the switcher stays readable to someone stuck on a locale they cannot read.
 - `BaseLayout`, `Header`, and `ProjectCard` all derive `lang` from `Astro.params` rather than taking it as a prop — that's the convention, and it's why the `<html lang>` attribute can't be forgotten. `BaseLayout` takes optional `title`/`description` props only.
 
-Adding a locale touches: `locales` in [astro.config.mjs](astro.config.mjs), the `Language` union in [src/types/language.type.ts](src/types/language.type.ts), a new `src/i18n/<lang>.ts`, the `dictionaries` map in [src/i18n/index.ts](src/i18n/index.ts), and a `languageOptions` label in each dictionary. Pages and the switcher derive everything else.
+Adding a locale touches: `locales` in [astro.config.mjs](astro.config.mjs), the `Language` union in [src/types/language.type.ts](src/types/language.type.ts), a new `src/i18n/<lang>.ts`, the `dictionaries` map in [src/i18n/index.ts](src/i18n/index.ts), a `languageOptions` entry in each dictionary, a `src/content/projects_<lang>.ts` wired into `projectsByLang`, and the hand-written locale block in [404.astro](src/pages/404.astro). Pages and the switcher derive everything else.
 
 ### Styling
 
@@ -67,7 +67,7 @@ House rules: nothing rounded, cards and figures stay transparent line drawings, 
 
 ### Content and layouts
 
-Projects are typed `Project[]` arrays in [src/content/projects_es.ts](src/content/projects_es.ts) / [projects_en.ts](src/content/projects_en.ts) — plain TypeScript, **not** Astro content collections, despite living in `src/content/`. Both are intentionally empty; projects aren't published yet (commit `ede4d8b`, "Don't show the projects yet").
+Projects are typed `Project[]` arrays in [src/content/projects_es.ts](src/content/projects_es.ts) / [projects_en.ts](src/content/projects_en.ts) / [projects_ca.ts](src/content/projects_ca.ts) — plain TypeScript, **not** Astro content collections, despite living in `src/content/`. One file per locale, kept in sync by hand; [projects.astro](src/pages/[lang]/projects.astro) picks the right array off a `Record<Language, Project[]>`, so adding a locale means adding a file there too.
 
 Per-project detail pages are hand-built page + component pairs (see [src/pages/\[lang\]/projects/example_project/](src/pages/[lang]/projects/example_project/) with `info`/`technical` tabs and matching components in [src/components/projects/](src/components/projects/)), not generated from the arrays. `example_project` is lorem ipsum scaffolding serving as the template; a project's `link` field points at such a page (e.g. `example_project/info`).
 

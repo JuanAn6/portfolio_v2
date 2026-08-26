@@ -6,16 +6,16 @@
 /* ══════════════════════════════════════════════════════════════════════════
    Industry — tokens.
 
-   Portado del design system "Industry" (claude.ai/design): steel-blue sobre
-   fondo técnico claro, Barlow Condensed sobre Barlow, retícula modular y
-   objetos de wireframe — esquinas rectas, borde de un pelo y marcas de
-   registro "+" en las esquinas. Tarjetas y figuras son dibujos de línea
-   transparentes; el botón primario es el único objeto sólido del tablero.
+   Ported from the "Industry" design system (claude.ai/design): steel blue on
+   a light technical ground, Barlow Condensed over Barlow, a modular grid and
+   wireframe objects — square corners, a hairline border and "+" registration
+   marks at the corners. Cards and figures are transparent line drawings; the
+   primary button is the only solid object on the sheet.
 
-   El sistema original es solo claro. Aquí los roles se redefinen bajo `.dark`
-   (mismo papel/tinta invertidos, acento un paso más claro), así que las
-   utilidades de Tailwind construidas sobre estos tokens cambian de tema
-   solas: NO hace falta una variante `dark:` por cada `bg-*`.
+   The original system is light only. Here the roles are redefined under
+   `.dark` (same paper/ink inverted, accent one step lighter), so the Tailwind
+   utilities built on these tokens swap theme by themselves: a `dark:` variant
+   is NOT needed for every `bg-*`.
    ══════════════════════════════════════════════════════════════════════ */
 
 :root {
@@ -23,10 +23,10 @@
   --ind-surface: #e9e9ea;
   --ind-text: #1d1f20;
   --ind-accent: #5980a6;
-  --ind-accent-hover: #597ea3;   /* accent-600 — un paso sobre fondo claro */
+  --ind-accent-hover: #597ea3;   /* accent-600 — one step up on a light ground */
   --ind-accent-press: #416180;   /* accent-700 */
-  --ind-accent-text: #416180;    /* acento legible a tamaño de texto (5.8:1) */
-  --ind-on-accent: #f2f2f3;      /* tinta sobre el relleno de acento */
+  --ind-accent-text: #416180;    /* accent legible at text size (5.8:1) */
+  --ind-on-accent: #f2f2f3;      /* ink over the accent fill */
   --ind-divider: color-mix(in srgb, #1d1f20 16%, transparent);
   --ind-muted: color-mix(in srgb, #1d1f20 70%, transparent);
   --ind-furniture: color-mix(in srgb, #1d1f20 55%, transparent);
@@ -46,12 +46,12 @@
   --ind-shadow-lg: 0 12px 32px color-mix(in srgb, #2b2b2d 22%, transparent);
 }
 
-/* Tema oscuro: mismo dibujo, papel y tinta invertidos. El acento sube a la
-   grada 400 para mantener el contraste sobre el fondo oscuro, y los estados
-   hover/press caminan hacia la luz en vez de hacia la sombra.
+/* Dark theme: same drawing, paper and ink inverted. The accent moves up to
+   step 400 to keep contrast over the dark ground, and the hover/press states
+   walk towards the light instead of towards the shadow.
 
-   Se escribe `:root.dark`, no `:where(.dark)`: `:where()` tiene especificidad
-   cero y el bloque `:root` de arriba lo ganaría siempre. */
+   Write it as `:root.dark`, not `:where(.dark)`: `:where()` has zero
+   specificity and the `:root` block above would always win. */
 :root.dark {
   --ind-bg: #1a1c1d;
   --ind-surface: #232527;
@@ -70,9 +70,9 @@
   --ind-shadow-lg: 0 12px 32px color-mix(in srgb, #000 60%, transparent);
 }
 
-/* Los tokens, expuestos como escala de Tailwind. `inline` hace que las
-   utilidades apunten a las variables `--ind-*` directamente, de modo que
-   `.dark` las reescribe sin generar un segundo juego de clases. */
+/* The tokens, exposed as the Tailwind scale. `inline` makes the utilities
+   point straight at the `--ind-*` variables, so `.dark` rewrites them without
+   generating a second set of classes. */
 @theme inline {
   --font-heading: "Barlow Condensed", system-ui, sans-serif;
   --font-body: "Barlow", system-ui, sans-serif;
@@ -131,16 +131,16 @@
 }
 
 @layer components {
-  /* — el marco de wireframe: cuadrado, un pelo de borde, marcas de registro.
-       Todo objeto dibujado del sistema lo lleva. — */
+  /* — the wireframe frame: square, hairline border, registration marks.
+       Every drawn object of the system carries it. — */
   .bp {
     position: relative;
     border: 1px solid var(--ind-divider);
     border-radius: 0;
     background: transparent;
   }
-  /* .duotone recorta su capa (overflow:hidden) y las marcas viven FUERA de
-     la caja, así que cuando comparten envoltorio el marco gana. */
+  /* .duotone clips its layer (overflow:hidden) and the marks live OUTSIDE
+     the box, so when they share a wrapper the frame wins. */
   .bp.duotone { overflow: visible; }
 
   .bp > .corner {
@@ -158,11 +158,11 @@
   .bp > .corner.bl { bottom: -8px; left: -8px; }
   .bp > .corner.br { bottom: -8px; right: -8px; }
 
-  /* Hover del marco: el borde se acerca al acento. Nada de elevar ni redondear. */
+  /* Frame hover: the border moves towards the accent. No lifting, no rounding. */
   .bp-hover { transition: border-color .2s ease, background-color .2s ease; }
   .bp-hover:hover { border-color: color-mix(in srgb, var(--ind-accent) 70%, transparent); }
 
-  /* — fotografía: serigrafía en acero — */
+  /* — photography: steel screen print — */
   .duotone { position: relative; overflow: hidden; }
   .duotone::after {
     content: ""; position: absolute; inset: 0; pointer-events: none;
@@ -170,7 +170,7 @@
   }
   .duotone img { filter: saturate(.25) contrast(1.05); }
 
-  /* — rótulos sobre regla dibujada: la etiqueta va ENCIMA, el contenido debajo — */
+  /* — labels over a drawn rule: the label goes ABOVE, the content below — */
   .kicker {
     display: block;
     font-family: "Barlow Condensed", system-ui, sans-serif;
@@ -182,7 +182,7 @@
   }
   .caption-rule { height: 1px; border: 0; margin: 0 0 12px; background: var(--ind-divider); }
 
-  /* — botones — */
+  /* — buttons — */
   .btn {
     display: inline-flex; align-items: center; justify-content: center; gap: 6px;
     cursor: pointer; text-decoration: none;
@@ -207,7 +207,7 @@
   .btn-ghost:active { background: color-mix(in srgb, var(--ind-accent) 20%, transparent); }
   .btn-icon { width: 36px; height: 36px; padding: 0; }
 
-  /* — etiquetas — */
+  /* — tags — */
   .tag {
     display: inline-flex; align-items: center;
     font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase;
@@ -217,8 +217,8 @@
   }
   .tag-accent { border-color: var(--ind-accent); color: var(--ind-accent-text); }
 
-  /* — control segmentado (las pestañas de cada proyecto): un solo objeto
-       dibujado, dividido por pelos; la opción activa es la única sólida — */
+  /* — segmented control (the tabs on each project): a single drawn object,
+       split by hairlines; the active option is the only solid one — */
   .seg {
     display: inline-flex; flex-wrap: wrap;
     border: 1px solid var(--ind-divider); border-radius: 0;
@@ -235,7 +235,7 @@
   .seg-opt[aria-current="page"] { background: var(--ind-accent); color: var(--ind-on-accent); }
   .seg-opt:not([aria-current="page"]):hover { background: color-mix(in srgb, var(--ind-text) 7%, transparent); }
 
-  /* — campos — */
+  /* — fields — */
   .input {
     width: 100%; min-height: 36px; padding: 6px 10px;
     font: inherit; font-size: 14px;
@@ -246,7 +246,7 @@
   .input:hover { border-color: color-mix(in srgb, var(--ind-text) 45%, transparent); }
   .input:focus-visible { border-color: var(--ind-accent); outline-offset: 0; }
 
-  /* — tabla — */
+  /* — table — */
   .table { width: 100%; border-collapse: collapse; font-size: 14px; }
   .table th {
     text-align: left; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
@@ -258,13 +258,13 @@
     border-bottom: 1px solid color-mix(in srgb, var(--ind-text) 8%, transparent);
   }
 
-  /* — el titular de portada: condensada, versales, interlínea ratio 1.04 — */
+  /* — the cover headline: condensed, caps, leading ratio 1.04 — */
   .display {
     font-family: "Barlow Condensed", system-ui, sans-serif; font-weight: 600;
     font-size: clamp(40px, 6.4vw, 84px);
     line-height: clamp(42px, 6.7vw, 88px);
     letter-spacing: 0.01em; text-transform: uppercase;
-    margin-left: -0.052em; /* alineación óptica izquierda, valor medido del sistema */
+    margin-left: -0.052em; /* optical left alignment, value measured from the system */
   }
   .display .line { display: block; }
 }

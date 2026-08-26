@@ -1,11 +1,12 @@
 import type { Language } from "../types/language.type";
 import es from "./es";
 import en from "./en";
+import ca from "./ca";
 
 /** Shape every locale must satisfy; `es` is the source of truth. */
 export type Dictionary = typeof es;
 
-const dictionaries: Record<Language, Dictionary> = { es, en };
+const dictionaries: Record<Language, Dictionary> = { es, en, ca };
 
 export const languages = Object.keys(dictionaries) as Language[];
 

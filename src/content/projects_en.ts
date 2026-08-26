@@ -2,6 +2,7 @@ import type { Project } from "../types/project.type";
 
 import file_manager from '../assets/imgs/file_manager.png';
 import library_manager from '../assets/imgs/library_manager.png';
+import charts3dimg from '../assets/imgs/chart3dimg.png';
 
 const projects: Project[] = [
     {
@@ -26,6 +27,17 @@ const projects: Project[] = [
         stack: ['Java', 'Angular'],
         working: true,
     },
+    {
+        title: 'Charts 3d',
+        description: 'A small library for creating interactive 3D charts that can be rotated and viewed from any angle.',
+        img: charts3dimg.src,
+        link: 'charts-3d/info',
+        show_link: false,
+        git_hub_link: 'https://github.com/JuanAn6/charts3d',
+        git_hub_link_show: true,
+        stack: ['TypeScript'],
+        working: true,
+    },  
 ];
 
 export default projects;

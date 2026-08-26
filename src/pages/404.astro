@@ -1,7 +1,8 @@
 ---
-// Servido por Cloudflare (assets.not_found_handling: "404-page") para cualquier
-// ruta inexistente. No usa BaseLayout: ese deriva `lang` de Astro.params, y
-// aquí no hay params — la página vive fuera de [lang]/, así que es bilingüe.
+// Served by Cloudflare (assets.not_found_handling: "404-page") for any route
+// that does not exist. It does not use BaseLayout: that one derives `lang` from
+// Astro.params, and there are no params here — the page lives outside [lang]/,
+// so it speaks every locale at once.
 import "../styles/global.css";
 
 const base = import.meta.env.BASE_URL;
@@ -22,7 +23,7 @@ const base = import.meta.env.BASE_URL;
           if (stored === "dark") document.documentElement.classList.add("dark");
           else if (stored === "light") document.documentElement.classList.remove("dark");
           else {
-            //System theme if nothing saved in localStorage
+            // System theme if nothing saved in localStorage
             if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
               document.documentElement.classList.add('dark');
             }
@@ -36,17 +37,19 @@ const base = import.meta.env.BASE_URL;
     <main class="max-w-6xl mx-auto p-6 min-h-screen flex flex-col items-center justify-center gap-8 text-center">
       <span class="kicker">Error 404</span>
 
-      <!-- La hoja no existe en el juego de planos: una cifra dibujada, no un adorno. -->
+      <!-- The sheet is missing from the drawing set: a drawn figure, not an ornament. -->
       <p class="font-heading text-[clamp(72px,16vw,160px)] leading-none font-semibold text-furniture">404</p>
 
       <div class="space-y-1">
         <p class="font-heading text-2xl uppercase tracking-[0.04em]">Esta página no existe.</p>
         <p class="font-heading text-2xl uppercase tracking-[0.04em] text-muted">This page doesn't exist.</p>
+        <p class="font-heading text-2xl uppercase tracking-[0.04em] text-muted">Aquesta pàgina no existeix.</p>
       </div>
 
       <div class="flex flex-wrap justify-center gap-4">
         <a href={`${base}es/`} class="btn btn-primary">Ir al inicio</a>
         <a href={`${base}en/`} class="btn btn-secondary">Go home</a>
+        <a href={`${base}ca/`} class="btn btn-secondary">Anar a l&rsquo;inici</a>
       </div>
     </main>
   </body>

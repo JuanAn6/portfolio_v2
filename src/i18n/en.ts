@@ -2,10 +2,13 @@ import type es from "./es";
 
 const en: typeof es = {
     languageLabel: "Language",
+    themeLabel: "Toggle theme",
+    menuLabel: "Toggle menu",
     workingOnThis: "Available soon!",
     languageOptions: {
-        es: "Spanish",
-        en: "English"
+        es: "Español",
+        en: "English",
+        ca: "Català"
     },
     kickers: {
         profile: "Profile",
@@ -19,6 +22,7 @@ const en: typeof es = {
         projects: "Projects",
         about_me: "About me",
         portfolio: "Portfolio",
+        my_name: "Juan Antonio",
     },
     home: {
         title: "Hello, I'm Juan Antonio García Jiménez",

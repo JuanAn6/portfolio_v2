@@ -9,7 +9,7 @@ const lang = Astro.params.lang as Language;
 const t = getTranslations(lang);
 ---
 
-<BaseLayout title={`${t.about.title} — ${t.nav.portfolio}`}>
+<BaseLayout title={`${t.about.title} — ${t.nav.my_name}`}>
   <section class="pb-12">
     <h1 class="display">{t.about.title}</h1>
   </section>
