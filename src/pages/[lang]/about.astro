@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import BoxComponent from "../../components/BoxComponent.astro";
 import { getTranslations } from "../../i18n";
 import type { Language } from "../../types/language.type";
 
@@ -9,16 +10,125 @@ const lang = Astro.params.lang as Language;
 const t = getTranslations(lang);
 ---
 
-<BaseLayout title={`${t.about.title} — ${t.nav.my_name}`}>
+<BaseLayout title={`${t.about.title} — ${t.nav.my_name}`} description={t.about.intro}>
   <section class="pb-12">
     <h1 class="display">{t.about.title}</h1>
+    <p class="mt-6 max-w-[70ch] text-muted">{t.about.intro}</p>
   </section>
 
-  <section>
-    <span class="kicker">01 · {t.kickers.notes}</span>
+  <section class="pb-12">
+    <span class="kicker">01 · {t.about.experience.kicker}</span>
     <hr class="caption-rule" />
-    <p class="mt-8 font-heading text-2xl uppercase tracking-[0.04em] text-muted">
-      {t.workingOnThis}
-    </p>
+
+    <div class="mt-8 flex flex-col gap-10">
+      {t.about.experience.items.map((job) => (
+        <BoxComponent>
+          <header class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-2">
+            <h2 class="font-heading text-xl font-semibold uppercase tracking-[0.06em]">
+              {job.role}
+            </h2>
+            <span class="tag tag-accent shrink-0">{job.period}</span>
+          </header>
+          <p class="mt-1 font-heading text-lg uppercase tracking-[0.04em] text-steel-text">
+            {job.company}
+          </p>
+          <ul class="mt-4 flex flex-col gap-2 text-muted">
+            {job.tasks.map((task) => (
+              <li class="pl-5 relative before:absolute before:left-0 before:top-[0.7em] before:h-px before:w-3 before:bg-current">
+                {task}
+              </li>
+            ))}
+          </ul>
+        </BoxComponent>
+      ))}
+    </div>
+  </section>
+
+  <section class="pb-12">
+    <span class="kicker">02 · {t.about.education.kicker}</span>
+    <hr class="caption-rule" />
+
+    <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-10">
+      {t.about.education.items.map((study) => (
+        <BoxComponent>
+          <header class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-2">
+            <h2 class="font-heading text-xl font-semibold uppercase tracking-[0.06em]">
+              {study.title}
+            </h2>
+            <span class="tag tag-accent shrink-0">{study.period}</span>
+          </header>
+          <p class="mt-1 font-heading text-lg uppercase tracking-[0.04em] text-steel-text">
+            {study.level}
+          </p>
+          <p class="mt-4 text-muted">{study.stack}</p>
+        </BoxComponent>
+      ))}
+    </div>
+  </section>
+
+  <section class="pb-12">
+    <span class="kicker">03 · {t.about.skills.kicker}</span>
+    <hr class="caption-rule" />
+
+    <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-10">
+      {t.about.skills.groups.map((group) => (
+        <BoxComponent>
+          <h2 class="font-heading text-xl font-semibold uppercase tracking-[0.06em]">
+            {group.label}
+          </h2>
+          <ul class="mt-4 flex flex-wrap gap-2">
+            {group.items.map((item) => (
+              <li class="tag">{item}</li>
+            ))}
+          </ul>
+        </BoxComponent>
+      ))}
+    </div>
+  </section>
+
+  <section class="pb-12">
+    <span class="kicker">04 · {t.about.strengths.kicker}</span>
+    <hr class="caption-rule" />
+
+    <div class="mt-8">
+      <BoxComponent>
+        <ul class="flex flex-col gap-2 text-muted">
+          {t.about.strengths.items.map((item) => (
+            <li class="pl-5 relative before:absolute before:left-0 before:top-[0.7em] before:h-px before:w-3 before:bg-current">
+              {item}
+            </li>
+          ))}
+        </ul>
+      </BoxComponent>
+    </div>
+  </section>
+
+  <section class="pb-6">
+    <span class="kicker">05 · {t.about.languages.kicker} / {t.about.extra.kicker}</span>
+    <hr class="caption-rule" />
+
+    <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-10">
+      <BoxComponent>
+        <h2 class="font-heading text-xl font-semibold uppercase tracking-[0.06em]">
+          {t.about.languages.kicker}
+        </h2>
+        <ul class="mt-4 flex flex-wrap gap-2">
+          {t.about.languages.items.map((item) => (
+            <li class="tag">{item}</li>
+          ))}
+        </ul>
+      </BoxComponent>
+
+      <!-- <BoxComponent>
+        <h2 class="font-heading text-xl font-semibold uppercase tracking-[0.06em]">
+          {t.about.extra.kicker}
+        </h2>
+        <ul class="mt-4 flex flex-wrap gap-2">
+          {t.about.extra.items.map((item) => (
+            <li class="tag">{item}</li>
+          ))}
+        </ul>
+      </BoxComponent> -->
+    </div>
   </section>
 </BaseLayout>

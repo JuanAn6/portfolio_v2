@@ -87,13 +87,76 @@ const ca: typeof es = {
     home: {
         title: "Hola, soc Juan Antonio García Jiménez",
         subtitle: "Desenvolupador d'aplicacions web i multiplataforma",
-        introduce_my_self: "Tinc més de dos anys d'experiència en el desenvolupament d'aplicacions web, treballant des de la lògica del backend i la base de dades fins a la construcció d'interfícies clares i funcionals.",
+        introduce_my_self: "Tinc més de tres anys d'experiència en el desenvolupament d'aplicacions web, treballant des de la lògica del backend i la base de dades fins a la construcció d'interfícies clares i funcionals.",
         introduce_my_characteristics: "Em caracteritzo per mantenir una actitud proactiva, curiosa i exigent amb la meva pròpia feina. Sempre busco aprendre més, millorar les meves habilitats i aportar valor real a cada projecte.",
         introduce_my_objectives: "El meu objectiu és continuar creixent professionalment mentre contribueixo en equips i productes que tinguin impacte.",
     },
     about: {
         title: "Sobre mi",
-        content: "",
+        intro: "Desenvolupador d'aplicacions web i multiplataforma. Treballo cada dia amb el cicle complet d'una aplicació de gestió: model de dades, lògica de servidor, interfície i desplegament. Em moc amb la mateixa soltesa parlant amb qui farà servir l'eina que deixant-la funcionant en producció.",
+        experience: {
+            kicker: "Experiència",
+            items: [
+                {
+                    role: "Desenvolupador d'aplicacions a mida",
+                    company: "Databis",
+                    period: "2022 — Actualitat",
+                    tasks: [
+                        "Desenvolupament d'aplicacions web i mòbils per a la gestió interna d'empreses, amb generació i enviament automàtic d'informes.",
+                        "Gestió i disseny de bases de dades.",
+                        "Desplegament d'aplicacions en entorns de desenvolupament i en producció.",
+                        "Atenció a consultes de clients i usuaris, i interpretació i implementació de noves funcionalitats.",
+                    ],
+                },
+            ],
+        },
+        education: {
+            kicker: "Formació",
+            items: [
+                {
+                    title: "Desenvolupament d'Aplicacions Multiplataforma (DAM)",
+                    level: "Grau Superior",
+                    period: "2024 — 2025",
+                    stack: "Java, Python, Hibernate, Odoo, C, C#, MongoDB, SQL Server…",
+                },
+                {
+                    title: "Desenvolupament d'Aplicacions Web (DAW)",
+                    level: "Grau Superior",
+                    period: "2022 — 2024",
+                    stack: "Laravel, Vue, React, Node, MySQL, Apache2, Nginx…",
+                },
+            ],
+        },
+        skills: {
+            kicker: "Tecnologies",
+            groups: [
+                { label: "Backend", items: ["Laravel", "Node", "Java", "C#", "C", "Python", "Hibernate"] },
+                { label: "Frontend", items: ["Vue", "React", "Astro", "Tailwind"] },
+                { label: "Dades", items: ["MySQL", "SQL Server", "MongoDB", "Disseny de bases de dades"] },
+                { label: "Sistemes", items: ["Apache2", "Nginx", "Desplegament en producció", "Odoo"] },
+            ],
+        },
+        languages: {
+            kicker: "Idiomes",
+            items: ["Castellà", "Català", "Anglès"],
+        },
+        strengths: {
+            kicker: "Aptituds",
+            items: [
+                "Persona proactiva: aprenc de pressa i tinc capacitat d'adaptació.",
+                "M'agrada parlar amb els clients, entendre què necessiten i en què els puc ajudar.",
+                "M'agrada treballar en equip.",
+                "Responsable, organitzat i puntual.",
+            ],
+        },
+        extra: {
+            kicker: "Informació",
+            items: [
+                "Carnet de conduir",
+                "Cotxe propi",
+                "Disponibilitat per viatjar",
+            ],
+        },
     },
     projects: {
         title: "Projectes",

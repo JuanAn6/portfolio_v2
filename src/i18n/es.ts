@@ -90,13 +90,78 @@ export default {
     home: {
         title: "Hola, soy Juan Antonio García Jiménez",
         subtitle: "Desarrollador de aplicaciones web y multiplataforma",
-        introduce_my_self: "Cuento con más de dos años de experiencia en el desarrollo de aplicaciones web, trabajando desde la lógica del backend y la base de datos hasta la construcción de interfaces claras y funcionales.",
+        introduce_my_self: "Cuento con más de tres años de experiencia en el desarrollo de aplicaciones web, trabajando desde la lógica del backend y la base de datos hasta la construcción de interfaces claras y funcionales.",
         introduce_my_characteristics: "Me caracterizo por mantener una actitud proactiva, curiosa y exigente con mi propio trabajo. Siempre busco aprender más, mejorar mis habilidades y aportar valor real en cada proyecto.",
         introduce_my_objectives: "Mi objetivo es seguir creciendo profesionalmente mientras contribuyo en equipos y productos que tengan impacto.",
     },
+    // Currículum: la fuente es el CV en PDF. Cada apartado lleva su propio
+    // kicker porque solo se usa en esta página.
     about: {
         title: "Sobre mí",
-        content: "",
+        intro: "Desarrollador de aplicaciones web y multiplataforma. Trabajo a diario con el ciclo completo de una aplicación de gestión: modelo de datos, lógica de servidor, interfaz y despliegue. Me muevo con la misma soltura hablando con quien va a usar la herramienta que dejándola funcionando en producción.",
+        experience: {
+            kicker: "Experiencia",
+            items: [
+                {
+                    role: "Desarrollador de aplicaciones a medida",
+                    company: "Databis",
+                    period: "2022 — Actualidad",
+                    tasks: [
+                        "Desarrollo de aplicaciones web y móviles para la gestión interna de empresas, con generación y envío automático de informes.",
+                        "Gestión y diseño de bases de datos.",
+                        "Despliegue de aplicaciones en entornos de desarrollo y en producción.",
+                        "Atención a consultas de clientes y usuarios, e interpretación e implementación de nuevas funcionalidades.",
+                    ],
+                },
+            ],
+        },
+        education: {
+            kicker: "Formación",
+            items: [
+                {
+                    title: "Desarrollo de Aplicaciones Multiplataforma (DAM)",
+                    level: "Grado Superior",
+                    period: "2024 — 2025",
+                    stack: "Java, Python, Hibernate, Odoo, C, C#, MongoDB, SQL Server…",
+                },
+                {
+                    title: "Desarrollo de Aplicaciones Web (DAW)",
+                    level: "Grado Superior",
+                    period: "2022 — 2024",
+                    stack: "Laravel, Vue, React, Node, MySQL, Apache2, Nginx…",
+                },
+            ],
+        },
+        skills: {
+            kicker: "Tecnologías",
+            groups: [
+                { label: "Backend", items: ["Laravel", "Node", "Java", "C#", "C", "Python", "Hibernate"] },
+                { label: "Frontend", items: ["Vue", "React", "Astro", "Tailwind"] },
+                { label: "Datos", items: ["MySQL", "SQL Server", "MongoDB", "Diseño de bases de datos"] },
+                { label: "Sistemas", items: ["Apache2", "Nginx", "Despliegue en producción", "Odoo"] },
+            ],
+        },
+        languages: {
+            kicker: "Idiomas",
+            items: ["Español", "Catalán", "Inglés"],
+        },
+        strengths: {
+            kicker: "Aptitudes",
+            items: [
+                "Persona proactiva: aprendo rápido y tengo capacidad de adaptación.",
+                "Me gusta hablar con los clientes, entender qué necesitan y en qué puedo ayudarles.",
+                "Me gusta trabajar en equipo.",
+                "Responsable, organizado y puntual.",
+            ],
+        },
+        extra: {
+            kicker: "Información",
+            items: [
+                "Carnet de conducir",
+                "Coche propio",
+                "Disponibilidad para viajar",
+            ],
+        },
     },
     projects: {
         title: "Proyectos",

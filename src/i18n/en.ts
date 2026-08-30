@@ -87,13 +87,76 @@ const en: typeof es = {
     home: {
         title: "Hello, I'm Juan Antonio García Jiménez",
         subtitle: "Web and cross platform developer",
-        introduce_my_self: "I have over two years of experience in web application development, working from backend logic and database to building clear and functional interfaces.",
+        introduce_my_self: "I have over three years of experience in web application development, working from backend logic and database to building clear and functional interfaces.",
         introduce_my_characteristics: "I am characterized by maintaining a proactive, curious, and demanding attitude toward my own work. I always seek to learn more, improve my skills, and contribute real value to every project.",
         introduce_my_objectives: "My goal is to continue growing professionally while contributing on teams and products that have an impact.",
     },
     about: {
         title: "About me",
-        content: "",
+        intro: "Web and cross platform developer. I work daily with the whole life cycle of a business application: data model, server logic, interface and deployment. I am equally comfortable talking to the people who will use the tool and leaving it running in production.",
+        experience: {
+            kicker: "Experience",
+            items: [
+                {
+                    role: "Custom application developer",
+                    company: "Databis",
+                    period: "2022 — Present",
+                    tasks: [
+                        "Development of web and mobile applications for internal company management, with automatic report generation and delivery.",
+                        "Database design and administration.",
+                        "Application deployment to development environments and production.",
+                        "Handling client and user queries, and interpreting and implementing new features.",
+                    ],
+                },
+            ],
+        },
+        education: {
+            kicker: "Education",
+            items: [
+                {
+                    title: "Cross Platform Application Development (DAM)",
+                    level: "Higher Vocational Degree",
+                    period: "2024 — 2025",
+                    stack: "Java, Python, Hibernate, Odoo, C, C#, MongoDB, SQL Server…",
+                },
+                {
+                    title: "Web Application Development (DAW)",
+                    level: "Higher Vocational Degree",
+                    period: "2022 — 2024",
+                    stack: "Laravel, Vue, React, Node, MySQL, Apache2, Nginx…",
+                },
+            ],
+        },
+        skills: {
+            kicker: "Technologies",
+            groups: [
+                { label: "Backend", items: ["Laravel", "Node", "Java", "C#", "C", "Python", "Hibernate"] },
+                { label: "Frontend", items: ["Vue", "React", "Astro", "Tailwind"] },
+                { label: "Data", items: ["MySQL", "SQL Server", "MongoDB", "Database design"] },
+                { label: "Systems", items: ["Apache2", "Nginx", "Production deployment", "Odoo"] },
+            ],
+        },
+        languages: {
+            kicker: "Languages",
+            items: ["Spanish", "Catalan", "English"],
+        },
+        strengths: {
+            kicker: "Strengths",
+            items: [
+                "A proactive person: I learn fast and adapt easily.",
+                "I enjoy talking to clients, understanding what they need and how I can help them.",
+                "I enjoy working as part of a team.",
+                "Reliable, organised and punctual.",
+            ],
+        },
+        extra: {
+            kicker: "Details",
+            items: [
+                "Driving licence",
+                "Own car",
+                "Available to travel",
+            ],
+        },
     },
     projects: {
         title: "Projects",
