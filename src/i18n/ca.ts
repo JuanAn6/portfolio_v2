@@ -163,6 +163,11 @@ const ca: typeof es = {
         show_details: "Veure detalls",
         introduction: "Aquesta és una petita col·lecció de projectes que he fet durant els anys d'estudi i durant el meu temps lliure.",
         developing: "Desenvolupant"
+    },
+    article: {
+        pendingImage: "Captura pendent",
+        captureFrom: "Capturar des de",
+        saveTo: "Desar a",
     }
 };
 

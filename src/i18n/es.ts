@@ -168,5 +168,12 @@ export default {
         show_details:"Ver detalles",
         introduction: "Esto es una pequeña colección de proyectos que he hecho durante los años de estudio y durante mi tiempo libre.",
         developing: "Desarrollando"
+    },
+    // Etiquetas del renderizador de artículos: solo se ven en el marcador que
+    // ocupa el sitio de una captura que todavía no se ha hecho.
+    article: {
+        pendingImage: "Captura pendiente",
+        captureFrom: "Capturar desde",
+        saveTo: "Guardar en",
     }
 };

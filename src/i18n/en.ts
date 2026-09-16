@@ -163,6 +163,11 @@ const en: typeof es = {
         show_details:"Show details",
         introduction: "This is a small collection of projects I have done during my years of study and during my free time.",
         developing: "Developing"
+    },
+    article: {
+        pendingImage: "Screenshot pending",
+        captureFrom: "Capture from",
+        saveTo: "Save to",
     }
 };
 

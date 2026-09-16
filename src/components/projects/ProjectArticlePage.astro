@@ -1,0 +1,53 @@
+---
+// The whole frame of a project page: the layout, the header with its two tabs
+// and the article. A page under src/pages/[lang]/projects/<slug>/ is then three
+// lines — which articles, which slug, which tab.
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import ProjectHeader from "./ProjectHeader.astro";
+import ArticleRenderer from "./ArticleRenderer.astro";
+
+import projectsEs from "../../content/projects_es";
+import projectsEn from "../../content/projects_en";
+import projectsCa from "../../content/projects_ca";
+
+import type { Language } from "../../types/language.type";
+import type { Project } from "../../types/project.type";
+import type { ProjectArticles } from "../../types/article.type";
+
+interface Props {
+  /** The project's articles in the current locale. */
+  articles: ProjectArticles;
+  /** Folder under `<lang>/projects/`, e.g. `file_manager`. */
+  slug: string;
+  active: "info" | "technical";
+}
+
+const { articles, slug, active } = Astro.props;
+
+const lang = Astro.params.lang as Language;
+
+// The technical article is optional: while it is unwritten this page still
+// builds, showing the information one, and `show_technical` on the card is what
+// keeps the tab hidden.
+const article = (active === "technical" ? articles.technical : articles.info) ?? articles.info;
+
+const projectBase = `${import.meta.env.BASE_URL}${lang}/projects/${slug}`;
+
+// Whether the technical tab exists is decided on the project card, not here.
+const projectsByLang: Record<Language, Project[]> = { es: projectsEs, en: projectsEn, ca: projectsCa };
+const project = projectsByLang[lang].find((p) => p.link.startsWith(`${slug}/`));
+---
+
+<BaseLayout title={article.meta_title ?? article.title} description={article.meta_description}>
+  <div class="flex flex-col items-start">
+    <ProjectHeader
+      title={article.title}
+      projectBase={projectBase}
+      active={active}
+      showTechnical={Boolean(project?.show_technical)}
+      infoLabel={articles.tabs?.info}
+      technicalLabel={articles.tabs?.technical}
+    />
+    <ArticleRenderer article={article} />
+  </div>
+</BaseLayout>

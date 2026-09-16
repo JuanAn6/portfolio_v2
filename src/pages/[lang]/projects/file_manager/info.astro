@@ -1,18 +1,12 @@
 ---
-import BaseLayout from '../../../../layouts/BaseLayout.astro';
+// Data in, page out: the article lives in src/content/file_manager_article_<lang>.ts.
+import ProjectArticlePage from '../../../../components/projects/ProjectArticlePage.astro';
+import fileManagerArticles from '../../../../content/file_manager_article';
 import type { Language } from '../../../../types/language.type';
-import ExampleProjectComponent from '../../../../components/projects/ExampleProjectComponent.astro';
-import ProjectHeader from '../../../../components/projects/ProjectHeader.astro';
 
 export { getStaticPaths } from '../../../../i18n';
 
 const lang = Astro.params.lang as Language;
-const projectBase = `${import.meta.env.BASE_URL}${lang}/projects/example_project`;
 ---
 
-<BaseLayout title="Example project">
-  <div class='flex flex-col items-start'>
-    <ProjectHeader title="File Managers" projectBase={projectBase} active="info" />
-    <ExampleProjectComponent />
-  </div>
-</BaseLayout>
+<ProjectArticlePage articles={fileManagerArticles[lang]} slug="file_manager" active="info" />

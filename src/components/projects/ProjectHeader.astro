@@ -2,13 +2,29 @@
 // Shared header for the project pages: the title condensed in caps and the
 // two tabs as a single segmented control — the active one is the only solid
 // piece on the sheet.
+//
+// `showTechnical` is the switch that matches `show_technical` on the project
+// card: a project whose technical write-up is not written yet has no page
+// behind that tab, so the tab is not drawn at all and the control collapses to
+// the single information one.
 interface Props {
   title: string;
   projectBase: string;
   active: "info" | "technical";
+  showTechnical?: boolean;
+  /** Tab labels, when the project's articles carry translated ones. */
+  infoLabel?: string;
+  technicalLabel?: string;
 }
 
-const { title, projectBase, active } = Astro.props;
+const {
+  title,
+  projectBase,
+  active,
+  showTechnical = true,
+  infoLabel = "Information content",
+  technicalLabel = "Technical content",
+} = Astro.props;
 ---
 
 <div class="flex w-full flex-wrap items-center justify-between gap-6 pb-8">
@@ -19,11 +35,13 @@ const { title, projectBase, active } = Astro.props;
       href={`${projectBase}/info`}
       class="seg-opt"
       aria-current={active === "info" ? "page" : undefined}
-    >Information content</a>
-    <a
-      href={`${projectBase}/technical`}
-      class="seg-opt"
-      aria-current={active === "technical" ? "page" : undefined}
-    >Technical content</a>
+    >{infoLabel}</a>
+    {showTechnical && (
+      <a
+        href={`${projectBase}/technical`}
+        class="seg-opt"
+        aria-current={active === "technical" ? "page" : undefined}
+      >{technicalLabel}</a>
+    )}
   </nav>
 </div>

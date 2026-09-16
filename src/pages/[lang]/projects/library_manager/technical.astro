@@ -1,0 +1,12 @@
+---
+// Data in, page out: the article lives in src/content/library_manager_article_<lang>.ts.
+import ProjectArticlePage from '../../../../components/projects/ProjectArticlePage.astro';
+import libraryManagerArticles from '../../../../content/library_manager_article';
+import type { Language } from '../../../../types/language.type';
+
+export { getStaticPaths } from '../../../../i18n';
+
+const lang = Astro.params.lang as Language;
+---
+
+<ProjectArticlePage articles={libraryManagerArticles[lang]} slug="library_manager" active="technical" />

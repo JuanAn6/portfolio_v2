@@ -1,0 +1,241 @@
+---
+// Draws an `Article` — the project write-ups are data (see
+// src/types/article.type.ts and src/content/school_article_<lang>.ts), never hand-built pages.
+//
+// Consecutive `subtitle`/`paragraph` blocks are gathered into a single framed
+// box, the way the sheets of the Industry system group a heading with its text;
+// a `title` opens a numbered section, and quotes, images and code listings each
+// stand alone, full width.
+import BoxComponent from "../BoxComponent.astro";
+import Corners from "../Corners.astro";
+import { getTranslations } from "../../i18n";
+import type { Language } from "../../types/language.type";
+import type {
+  Article,
+  CodeBlock,
+  ImageBlock,
+  ParagraphBlock,
+  QuoteBlock,
+  SubtitleBlock,
+} from "../../types/article.type";
+
+interface Props {
+  article: Article;
+}
+
+const { article } = Astro.props;
+const lang = Astro.params.lang as Language;
+const t = getTranslations(lang);
+const base = import.meta.env.BASE_URL;
+
+/** Anchor for a heading with no explicit `id`. */
+function slug(text: string): string {
+  return text
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+}
+
+type Group =
+  | { kind: "title"; text: string; id: string; number: string }
+  | { kind: "prose"; items: Array<SubtitleBlock | ParagraphBlock> }
+  | { kind: "quote"; block: QuoteBlock }
+  | { kind: "image"; block: ImageBlock }
+  | { kind: "code"; block: CodeBlock };
+
+const groups: Group[] = [];
+let sections = 0;
+
+for (const block of article.blocks) {
+  const last = groups[groups.length - 1];
+
+  switch (block.type) {
+    case "title":
+      sections += 1;
+      groups.push({
+        kind: "title",
+        text: block.text,
+        id: block.id ?? slug(block.text),
+        number: String(sections).padStart(2, "0"),
+      });
+      break;
+    // A subtitle always opens its own box; a paragraph joins the one above it.
+    case "subtitle":
+      groups.push({ kind: "prose", items: [block] });
+      break;
+    case "paragraph":
+      if (last && last.kind === "prose") last.items.push(block);
+      else groups.push({ kind: "prose", items: [block] });
+      break;
+    case "quote":
+      groups.push({ kind: "quote", block });
+      break;
+    case "image":
+      groups.push({ kind: "image", block });
+      break;
+    case "code":
+      groups.push({ kind: "code", block });
+      break;
+  }
+}
+
+// The registration marks stick out 8px from every frame, so the blocks keep a
+// full unit of air between them.
+---
+
+<!-- `minmax(0, 1fr)` and not `grid-cols-1`: a grid cell is `min-width: auto` by
+     default, so a wide code listing would stretch the column instead of
+     scrolling inside its own frame. -->
+<div class="grid grid-cols-[minmax(0,1fr)] gap-10 mt-2 w-full">
+  {article.intro && (
+    <p class="max-w-[70ch] text-muted">{article.intro}</p>
+  )}
+
+  {groups.map((group) => {
+    if (group.kind === "title") {
+      return (
+        <div id={group.id} class="scroll-mt-28 pt-4">
+          <span class="kicker">{group.number}</span>
+          <hr class="caption-rule" />
+          <h2 class="font-heading text-3xl md:text-4xl font-semibold uppercase tracking-[0.02em]">
+            {group.text}
+          </h2>
+        </div>
+      );
+    }
+
+    if (group.kind === "prose") {
+      return (
+        <BoxComponent>
+          {group.items.map((item, index) =>
+            item.type === "subtitle" ? (
+              <h3
+                id={item.id ?? slug(item.text)}
+                class:list={[
+                  "font-heading text-2xl font-semibold uppercase tracking-[0.02em] scroll-mt-28",
+                  index > 0 && "mt-8",
+                ]}
+              >{item.text}</h3>
+            ) : (
+              <p class:list={["max-w-[70ch] text-muted", index > 0 && "mt-3"]}>{item.text}</p>
+            )
+          )}
+        </BoxComponent>
+      );
+    }
+
+    if (group.kind === "quote") {
+      return (
+        <figure class="bp bp-hover p-6 md:p-8">
+          <Corners />
+          <div class="flex items-start gap-5">
+            {group.block.icon && (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="28"
+                height="28"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+                class="mt-1 shrink-0 text-steel-text"
+                set:html={group.block.icon}
+              />
+            )}
+            <div>
+              <blockquote class="font-heading text-xl md:text-2xl leading-snug max-w-[50ch]">
+                {group.block.text}
+              </blockquote>
+              {group.block.author && (
+                <figcaption class="kicker mt-4">{group.block.author}</figcaption>
+              )}
+            </div>
+          </div>
+        </figure>
+      );
+    }
+
+    if (group.kind === "image") {
+      // No capture taken yet: draw the marker that says where the screenshot
+      // comes from and where the file has to be dropped.
+      if (group.block.pending) {
+        return (
+          <figure class="bp">
+            <Corners />
+            <div class="flex flex-col items-center gap-4 px-6 py-16 text-center">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="36"
+                height="36"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+                class="text-steel-text"
+              >
+                <path d="M15 8h.01" />
+                <path d="M3 6a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v12a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3v-12z" />
+                <path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l5 5" />
+                <path d="M14 14l1 -1c.928 -.893 2.072 -.893 3 0l3 3" />
+              </svg>
+              <span class="kicker">{t.article.pendingImage}</span>
+              <p class="max-w-[60ch] text-muted">{group.block.alt}</p>
+              <dl class="mt-2 grid gap-2 text-sm">
+                {group.block.captureUrl && (
+                  <div class="flex flex-wrap items-baseline justify-center gap-2">
+                    <dt class="kicker">{t.article.captureFrom}</dt>
+                    <dd class="font-mono break-all">{group.block.captureUrl}</dd>
+                  </div>
+                )}
+                <div class="flex flex-wrap items-baseline justify-center gap-2">
+                  <dt class="kicker">{t.article.saveTo}</dt>
+                  <dd class="font-mono break-all">public/{group.block.src}</dd>
+                </div>
+              </dl>
+            </div>
+          </figure>
+        );
+      }
+
+      return (
+        <figure class="bp bp-hover">
+          <Corners />
+          <div class="duotone">
+            <img
+              class="w-full"
+              src={`${base}${group.block.src}`}
+              alt={group.block.alt}
+              loading="lazy"
+            />
+          </div>
+          {group.block.caption && (
+            <figcaption class="border-t border-rule px-6 py-4 text-sm text-muted">
+              {group.block.caption}
+            </figcaption>
+          )}
+        </figure>
+      );
+    }
+
+    return (
+      <div class="bp bp-hover">
+        <Corners />
+        {(group.block.caption || group.block.language) && (
+          <div class="flex flex-wrap items-center justify-between gap-4 border-b border-rule px-6 py-3">
+            <span class="kicker min-w-0 break-all">{group.block.caption}</span>
+            {group.block.language && <span class="tag">{group.block.language}</span>}
+          </div>
+        )}
+        <pre class="overflow-x-auto px-6 py-5"><code class="font-mono text-sm">{group.block.code}</code></pre>
+      </div>
+    );
+  })}
+</div>

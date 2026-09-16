@@ -1,0 +1,12 @@
+---
+// Data in, page out: the article lives in src/content/charts_3d_article_<lang>.ts.
+import ProjectArticlePage from '../../../../components/projects/ProjectArticlePage.astro';
+import charts3dArticles from '../../../../content/charts_3d_article';
+import type { Language } from '../../../../types/language.type';
+
+export { getStaticPaths } from '../../../../i18n';
+
+const lang = Astro.params.lang as Language;
+---
+
+<ProjectArticlePage articles={charts3dArticles[lang]} slug="charts-3d" active="info" />
