@@ -103,9 +103,18 @@ export default {
             kicker: "Experiencia",
             items: [
                 {
+                    role: "Desarrollador de software",
+                    company: "Creagia",
+                    url: "https://creagia.com",
+                    period: "2026 — Actualidad",
+                    stack: ["Laravel", "Filament", "Node", "React", "Docker"],
+                    tasks: [],
+                },
+                {
                     role: "Desarrollador de aplicaciones a medida",
                     company: "Databis",
-                    period: "2022 — Actualidad",
+                    url: "https://databis.net",
+                    period: "2023 — 2026",
                     tasks: [
                         "Desarrollo de aplicaciones web y móviles para la gestión interna de empresas, con generación y envío automático de informes.",
                         "Gestión y diseño de bases de datos.",
