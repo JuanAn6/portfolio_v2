@@ -98,9 +98,18 @@ const en: typeof es = {
             kicker: "Experience",
             items: [
                 {
+                    role: "Software developer",
+                    company: "Creagia",
+                    url: "https://creagia.com",
+                    period: "2026 — Present",
+                    stack: ["Laravel", "Filament", "Node", "React", "Docker"],
+                    tasks: [],
+                },
+                {
                     role: "Custom application developer",
                     company: "Databis",
-                    period: "2022 — Present",
+                    url: "https://databis.net",
+                    period: "2023 — 2026",
                     tasks: [
                         "Development of web and mobile applications for internal company management, with automatic report generation and delivery.",
                         "Database design and administration.",

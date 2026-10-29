@@ -30,15 +30,26 @@ const t = getTranslations(lang);
             <span class="tag tag-accent shrink-0">{job.period}</span>
           </header>
           <p class="mt-1 font-heading text-lg uppercase tracking-[0.04em] text-steel-text">
-            {job.company}
+            <a href={job.url} target="_blank" rel="noopener noreferrer" class="underline-offset-4 hover:underline">
+              {job.company}
+            </a>
           </p>
-          <ul class="mt-4 flex flex-col gap-2 text-muted">
-            {job.tasks.map((task) => (
-              <li class="pl-5 relative before:absolute before:left-0 before:top-[0.7em] before:h-px before:w-3 before:bg-current">
-                {task}
-              </li>
-            ))}
-          </ul>
+          {job.stack && (
+            <ul class="mt-4 flex flex-wrap gap-2">
+              {job.stack.map((item) => (
+                <li class="tag">{item}</li>
+              ))}
+            </ul>
+          )}
+          {job.tasks.length > 0 && (
+            <ul class="mt-4 flex flex-col gap-2 text-muted">
+              {job.tasks.map((task: string) => (
+                <li class="pl-5 relative before:absolute before:left-0 before:top-[0.7em] before:h-px before:w-3 before:bg-current">
+                  {task}
+                </li>
+              ))}
+            </ul>
+          )}
         </BoxComponent>
       ))}
     </div>

@@ -98,9 +98,18 @@ const ca: typeof es = {
             kicker: "Experiència",
             items: [
                 {
+                    role: "Desenvolupador de programari",
+                    company: "Creagia",
+                    url: "https://creagia.com",
+                    period: "2026 — Actualitat",
+                    stack: ["Laravel", "Filament", "Node", "React", "Docker"],
+                    tasks: [],
+                },
+                {
                     role: "Desenvolupador d'aplicacions a mida",
                     company: "Databis",
-                    period: "2022 — Actualitat",
+                    url: "https://databis.net",
+                    period: "2023 — 2026",
                     tasks: [
                         "Desenvolupament d'aplicacions web i mòbils per a la gestió interna d'empreses, amb generació i enviament automàtic d'informes.",
                         "Gestió i disseny de bases de dades.",
